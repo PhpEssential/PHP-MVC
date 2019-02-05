@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class Input extends Control {
@@ -60,4 +59,3 @@ class Input extends Control {
 		echo "<input " . $this->buildArguments() . " />";
 	}
 }
-

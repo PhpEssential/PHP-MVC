@@ -23,4 +23,3 @@ class CookieUtils {
 		return isset($_COOKIE[$key]);
 	}
 }
-

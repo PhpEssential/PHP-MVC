@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\sql\core\query;
 
 use framework\sql\core\metadata\Field;

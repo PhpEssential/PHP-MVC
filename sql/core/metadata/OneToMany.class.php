@@ -22,4 +22,3 @@ class OneToMany extends ExtraAssociation {
     	$this->foreignFieldName = $foreignFieldName;
     }
 }
-

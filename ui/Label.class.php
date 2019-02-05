@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class Label extends HtmlElement {
@@ -35,4 +34,3 @@ class Label extends HtmlElement {
 		echo "<label " . $this->buildArguments() . ">" . $this->text . "</label>";
 	}
 }
-

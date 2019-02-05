@@ -36,4 +36,3 @@ class Field extends AbstractField {
         $this->dataType = $dataType;
     }
 }
-

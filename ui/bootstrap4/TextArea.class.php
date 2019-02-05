@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\TextArea as DefaultTextArea;
@@ -11,4 +10,3 @@ class TextArea extends DefaultTextArea {
 		$this->addClass("form-control");
 	}
 }
-?>

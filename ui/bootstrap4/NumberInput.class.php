@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\NumberInput as DefaultNumberInput;
@@ -11,4 +10,3 @@ class NumberInput extends DefaultNumberInput {
 		$this->addClass("form-control");
 	}
 }
-

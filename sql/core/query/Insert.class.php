@@ -54,4 +54,3 @@ class Insert {
         return "INSERT INTO " . $dbName . "." . $this->table->getName() . "(" . $sqlFields . ") VALUES(" . $sqlValues . ")";
     }
 }
-?>

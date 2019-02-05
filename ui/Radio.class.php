@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class Radio extends Input {
@@ -13,4 +12,3 @@ class Radio extends Input {
 		return $this;
 	}
 }
-

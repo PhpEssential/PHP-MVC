@@ -19,4 +19,3 @@ class OneToOneRef extends DirectAssociation {
     	parent::__construct($name, $foreignClass, self::createLinkFields($fieldMap, $foreignClass));
     }
 }
-

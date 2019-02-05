@@ -30,4 +30,3 @@ class QueryField {
 		return  $this->table->getAlias() . "." . $this->field->sqlName;
 	}
 }
-?>

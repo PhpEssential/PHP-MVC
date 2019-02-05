@@ -1,7 +1,5 @@
 <?php
-
 namespace framework\sql\utils;
-
 
 use framework\sql\core\metadata\Field;
 use framework\utils\DateUtils;
@@ -54,4 +52,3 @@ class SqlUtils {
 		}
 	}
 }
-

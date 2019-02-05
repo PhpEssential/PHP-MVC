@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\Container;
@@ -84,4 +83,3 @@ class CustomRadio extends Container {
 		return $this;
 	}
 }
-

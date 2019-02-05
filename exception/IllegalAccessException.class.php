@@ -7,4 +7,3 @@ class IllegalAccessException extends \Exception {
 		parent::__construct("Non autorisé !" . ($message != "" ? " : " . $message : ""), null, $previous);
 	}
 }
-

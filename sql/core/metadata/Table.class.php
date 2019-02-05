@@ -21,4 +21,3 @@ class Table {
     	return $this->sqlName;
     }
 }
-?>

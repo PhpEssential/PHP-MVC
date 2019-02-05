@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class Select extends Control {
@@ -59,4 +58,3 @@ class Select extends Control {
 		return $htmlOptions;
 	}
 }
-?>

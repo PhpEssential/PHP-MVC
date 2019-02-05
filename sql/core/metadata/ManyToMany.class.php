@@ -37,4 +37,3 @@ class ManyToMany extends ExtraAssociation {
         $this->primaryFields = $this->createLinkFields($primaryFields);
     }
 }
-

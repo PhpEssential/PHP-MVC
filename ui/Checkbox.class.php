@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class Checkbox extends Input {
@@ -18,4 +17,3 @@ class Checkbox extends Input {
 		return $this;
 	}
 }
-

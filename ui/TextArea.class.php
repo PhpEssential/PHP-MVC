@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class TextArea extends Control {
@@ -70,4 +69,3 @@ class TextArea extends Control {
 		echo "<textarea " . $this->buildArguments() . " >" . $this->value . "</textarea>";
 	}
 }
-?>

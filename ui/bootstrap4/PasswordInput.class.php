@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\PasswordInput as DefaultPasswordInput;
@@ -11,4 +10,3 @@ class PasswordInput extends DefaultPasswordInput {
 		$this->addClass("form-control");
 	}
 }
-

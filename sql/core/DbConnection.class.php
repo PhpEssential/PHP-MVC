@@ -1,7 +1,5 @@
 <?php
-
 namespace framework\sql\core;
-
 
 use framework\Config;
 use framework\exception\SqlException;
@@ -170,4 +168,3 @@ class DbConnection {
 		$this->connection = null;
 	}	
 }
-?>

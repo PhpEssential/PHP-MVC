@@ -39,4 +39,3 @@ class AliasedQueryField extends QueryField {
     	return $this->getAccessString() . ' "' . $this->alias . '"';
     }
 }
-?>

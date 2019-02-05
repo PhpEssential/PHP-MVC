@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\system;
 
 class System {
@@ -7,4 +6,3 @@ class System {
 		return (DIRECTORY_SEPARATOR == '/') ? true : false;
 	}
 }
-

@@ -12,4 +12,3 @@ class SqlException extends \Exception {
 		parent::__construct("Problème lors de l'execution de la rêquete: " . $sqlRequest . "\n" . $previous->getMessage());
 	}
 }
-

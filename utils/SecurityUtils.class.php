@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\utils;
 
 class SecurityUtils {
@@ -17,4 +16,3 @@ class SecurityUtils {
 		return crypt($text, md5($salt));
 	}
 }
-

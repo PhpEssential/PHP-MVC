@@ -46,4 +46,3 @@ class GenericEntity extends Entity {
     	return array(new Field(self::FIELD_ID, "id", Field::INT));
     }
 }
-?>

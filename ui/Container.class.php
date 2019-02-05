@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class Container extends HtmlElement {
@@ -37,4 +36,3 @@ class Container extends HtmlElement {
 		echo "</" . $this->type . ">";
 	}
 }
-

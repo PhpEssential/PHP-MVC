@@ -22,4 +22,3 @@ class OneToOne extends DirectAssociation {
 		$this->foreignFieldName = $foreignFieldName;
     }
 }
-

@@ -1,7 +1,6 @@
 <?php
 namespace framework\ui\form;
 
-
 use framework\exception\IllegalArgumentException;
 use framework\utils\LogUtils;
 use framework\Config;

@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\Container;
@@ -47,4 +46,3 @@ class CustomCheckbox extends Container {
 		return $this;
 	}
 }
-

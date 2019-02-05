@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\Control;
@@ -65,4 +64,3 @@ class CustomRadioGroup extends Control {
 		}
 	}
 }
-?>

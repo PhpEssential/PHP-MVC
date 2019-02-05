@@ -7,4 +7,3 @@ class EmailException extends \Exception {
 		parent::__construct($message, null, $previous);
 	}
 }
-

@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\sql\models;
 
 use framework\Config;
@@ -315,4 +314,3 @@ class Entity extends AbstractEntity {
     	return $result;
     }
 }
-?>

@@ -43,4 +43,3 @@ class Join {
         return $this->joinType . " " . $dbName . "." . $this->table->getTable()->getName() . " " . $this->table->getAlias() . " ON " . $this->conditions->toString();
     }
 }
-?>

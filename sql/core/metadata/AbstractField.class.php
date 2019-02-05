@@ -18,4 +18,3 @@ class AbstractField {
     	$this->name = $name;
     }
 }
-

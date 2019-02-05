@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\renderer;
 
 use framework\ui\HtmlElement;
@@ -41,4 +40,3 @@ class DefaultRenderer implements IRenderer {
 			->render();
 	}
 }
-

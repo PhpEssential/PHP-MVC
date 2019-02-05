@@ -1,7 +1,7 @@
 <?php
 namespace framework\utils;
 
-use framework\models\Entity;
+use framework\sql\models\Entity;
 
 /**
  * Classe utilitaire permettant la gestion des requêtes HTTP
@@ -167,4 +167,3 @@ class RequestUtils {
         return null;
     }
 }
-?>

@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\TextInput as DefaultTextInput;
@@ -11,4 +10,3 @@ class TextInput extends DefaultTextInput {
 		$this->addClass("form-control");
 	}
 }
-

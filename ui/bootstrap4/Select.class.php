@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\Select as DefaultSelect;
@@ -11,4 +10,3 @@ class Select extends DefaultSelect {
 		$this->addClass("form-control");
 	}
 }
-?>

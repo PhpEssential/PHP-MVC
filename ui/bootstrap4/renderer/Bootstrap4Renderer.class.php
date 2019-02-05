@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4\renderer;
 
 use framework\ui\Container;
@@ -134,4 +133,3 @@ class Bootstrap4Renderer extends DefaultRenderer {
 			->render();
 	}
 }
-

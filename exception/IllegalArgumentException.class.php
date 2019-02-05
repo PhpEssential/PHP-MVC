@@ -7,4 +7,3 @@ class IllegalArgumentException extends \Exception {
 		parent::__construct("Argument invalide: " . $argumentName . "(" .$message . ")", null, $previous);
 	}
 }
-

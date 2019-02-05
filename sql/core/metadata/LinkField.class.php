@@ -25,4 +25,3 @@ class LinkField {
         $this->field = $field;
     }
 }
-

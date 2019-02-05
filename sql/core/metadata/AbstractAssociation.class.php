@@ -58,4 +58,3 @@ class AbstractAssociation extends AbstractField {
     	return $links;
     }
 }
-

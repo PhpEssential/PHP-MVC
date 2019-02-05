@@ -67,4 +67,3 @@ class PageFetcher extends Fetcher {
     	return new PagedList($list, $count, $filtredCount);
     }
 }
-?>

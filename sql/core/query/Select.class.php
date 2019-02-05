@@ -297,4 +297,3 @@ class Select {
     	return "t" . ++$this->tableAliasCount;
     }
 }
-?>

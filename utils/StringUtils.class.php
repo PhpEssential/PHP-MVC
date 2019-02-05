@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\utils;
 
 class StringUtils {
@@ -17,4 +16,3 @@ class StringUtils {
 		return (substr($haystack, -$length) === $needle);
 	}
 }
-

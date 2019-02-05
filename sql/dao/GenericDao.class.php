@@ -102,4 +102,3 @@ abstract class GenericDao {
     	return $fetcher->findUnique(); 
     }
 }
-?>

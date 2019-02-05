@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class PasswordInput extends Input {
@@ -7,4 +6,3 @@ class PasswordInput extends Input {
 		parent::__construct("password", $name);
 	}
 }
-

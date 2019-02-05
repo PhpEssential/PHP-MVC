@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 abstract class Control extends HtmlElement {
@@ -28,4 +27,3 @@ abstract class Control extends HtmlElement {
 		return $this;
 	}
 }
-

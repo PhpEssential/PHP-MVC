@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class RangeInput extends Input {
@@ -28,4 +27,3 @@ class RangeInput extends Input {
 		return $this;
 	}
 }
-

@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class FileInput extends Input {
@@ -7,4 +6,3 @@ class FileInput extends Input {
 		parent::__construct("file", $name);
 	}
 }
-

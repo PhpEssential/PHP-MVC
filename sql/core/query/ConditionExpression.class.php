@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\sql\core\query;
 
 use framework\exception\IllegalAccessException;

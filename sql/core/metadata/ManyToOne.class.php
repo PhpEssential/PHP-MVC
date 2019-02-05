@@ -20,4 +20,3 @@ class ManyToOne extends DirectAssociation {
     	parent::__construct($name, $foreignClass, self::createLinkFields($fieldMapping));
     }
 }
-

@@ -1,7 +1,5 @@
 <?php
-
 namespace framework\sql\core\query;
-
 
 use framework\sql\models\Entity;
 
@@ -21,4 +19,3 @@ class PagedList {
 		$this->filtredRowCount = $filtredRowCount;
 	}
 }
-

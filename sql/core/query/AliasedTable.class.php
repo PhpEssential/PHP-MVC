@@ -47,4 +47,3 @@ class AliasedTable {
     	return $this->table;
     }
 }
-?>

@@ -29,4 +29,3 @@ class TableEntity extends Table {
     	return $this->entity;
     }
 }
-?>

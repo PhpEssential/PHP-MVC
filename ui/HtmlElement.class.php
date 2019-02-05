@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 use framework\ui\renderer\IRenderer;
@@ -252,4 +251,3 @@ abstract class HtmlElement {
 	 */
 	public abstract function render();
 }
-

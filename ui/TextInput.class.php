@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class TextInput extends Input {
@@ -7,4 +6,3 @@ class TextInput extends Input {
 		parent::__construct("text", $name);
 	}
 }
-

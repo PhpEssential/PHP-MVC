@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui\bootstrap4;
 
 use framework\ui\FileInput as DefaultFileInput;
@@ -12,4 +11,3 @@ class FileInput extends DefaultFileInput {
 		
 	}
 }
-

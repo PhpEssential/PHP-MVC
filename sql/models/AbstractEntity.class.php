@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\sql\models;
 
 use framework\exception\IllegalAccessException;
@@ -179,4 +178,3 @@ class AbstractEntity {
     	}
     }
 }
-?>

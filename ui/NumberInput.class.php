@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class NumberInput extends Input {
@@ -17,4 +16,3 @@ class NumberInput extends Input {
 		return $this;
 	}
 }
-

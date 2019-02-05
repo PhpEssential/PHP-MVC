@@ -1,5 +1,4 @@
 <?php
-
 namespace framework\ui;
 
 class HiddenInput extends Input {
