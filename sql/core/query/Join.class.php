@@ -40,6 +40,6 @@ class Join {
      * @return string
      */
     public function toString(string $dbName) : string {
-        return $this->joinType . " " . $dbName . "." . $this->table->getTable()->getName() . " " . $this->table->getAlias() . " ON " . $this->conditions->toString();
+        return $this->joinType . " `" . $dbName . "`.`" . $this->table->getTable()->getName() . "` " . $this->table->getAlias() . " ON " . $this->conditions->toString();
     }
 }

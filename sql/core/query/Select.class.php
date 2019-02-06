@@ -252,7 +252,7 @@ class Select {
         }
         $sql = substr($sql, 0, strlen($sql) - 1);
         
-        $sql .= " FROM " . $dbName . "." . $this->table->getTable()->getName() . " " . $this->table->getAlias() . " ";
+        $sql .= " FROM `" . $dbName . "`.`" . $this->table->getTable()->getName() . "` " . $this->table->getAlias() . " ";
         foreach ($this->links as $tableKey => $link) {
         	$sql .= $link->toString($dbName) . " ";
         }

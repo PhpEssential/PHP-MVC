@@ -51,6 +51,6 @@ class Insert {
         $sqlFields = substr($sqlFields, 0, -1);
         $sqlValues = substr($sqlValues, 0, -1);
         
-        return "INSERT INTO " . $dbName . "." . $this->table->getName() . "(" . $sqlFields . ") VALUES(" . $sqlValues . ")";
+        return "INSERT INTO `" . $dbName . "`.`" . $this->table->getName() . "`(" . $sqlFields . ") VALUES(" . $sqlValues . ")";
     }
 }
