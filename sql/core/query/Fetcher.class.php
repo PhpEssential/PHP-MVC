@@ -416,7 +416,7 @@ class Fetcher {
 			if ($listField instanceof ManyToMany) {
 				$table = $fetcher->findTable(md5($listField->associativeTable->getName()));
 				$linkFields = $fetcher->select->findFields(array_map(function ($linkField) {
-					return $linkField->field;
+					return $linkField->referenceField;
 				}, $listField->primaryFields), $table);
 			} else if ($listField instanceof OneToMany) {
 				$linkFields = array ();
@@ -489,6 +489,10 @@ class Fetcher {
 			}
 
 			$entity = $this->buildEntity($row);
+			if($field instanceof OneToMany) {
+				$refFieldName = $field->referenceField->name;
+				$entity->$refFieldName = $parentEntity;
+			}
 
 			if (! isset($parentEntity->$fieldName))
 				$parentEntity->$fieldName = array ();
