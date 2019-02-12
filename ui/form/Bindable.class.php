@@ -4,6 +4,7 @@ namespace framework\ui\form;
 use framework\exception\IllegalArgumentException;
 use framework\utils\LogUtils;
 use framework\Config;
+use framework\internationalization\Message;
 
 /**
  * Classe permettant de définir un objet comme étant assignable depuis une requète HTTP
