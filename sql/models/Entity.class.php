@@ -77,27 +77,27 @@ class Entity extends AbstractEntity {
 		if ($conn === null) {
 			$conn = DbConnection::getInstance();
 		}
-		
+
 		$endTransaction = false;
 		if (! $conn->hasActiveTransaction()) {
 			$conn->startTransaction();
 			$endTransaction = true;
 		}
-		
+
 		$fields = static::getFields();
 		$entityFields = array ();
-		
+
 		foreach ( $fields as $field ) {
 			if ($field instanceof Field) {
 				$fieldName = $field->name;
 				$value = $this->$fieldName;
 				$entityFields [$field->sqlName] = array (
-						$field,$value 
+						$field,$value
 				);
 			} else if ($field instanceof ManyToOne || $field instanceof OneToOneRef) {
 				$fieldName = $field->name;
 				$foreignEntity = $this->$fieldName;
-				
+
 				foreach ( $field->linkFields as $linkField ) {
 					if ($foreignEntity === null) {
 						$value = null;
@@ -106,16 +106,16 @@ class Entity extends AbstractEntity {
 						$value = $foreignEntity->$foreignFieldName;
 					}
 					$entityFields [$linkField->sqlName] = array (
-							$linkField->referenceField,$value 
+							$linkField->referenceField,$value
 					);
 				}
 			}
 		}
-		
+
 		try {
 			$conn->execute((new Insert(static::table(), $entityFields))->toString(Config::get(Config::DB_NAME)));
 			$this->setDiscriminantValue($conn);
-			
+
 			foreach ( $fields as $field ) {
 				if (! ($field instanceof AbstractAssociation) || ! $field->cascade)
 					continue;
@@ -128,13 +128,13 @@ class Entity extends AbstractEntity {
 							foreach ( $field->linkFields as $linkField ) {
 								$linkFieldName = $linkField->referenceField->name;
 								$entityFields [$linkField->sqlName] = array (
-										$linkField->referenceField,$entity->$linkFieldName 
+										$linkField->referenceField,$entity->$linkFieldName
 								);
 							}
 							foreach ( $field->primaryFields as $linkField ) {
 								$linkFieldName = $linkField->referenceField->name;
 								$entityFields [$linkField->sqlName] = array (
-										$linkField->referenceField,$this->$linkFieldName 
+										$linkField->referenceField,$this->$linkFieldName
 								);
 							}
 							$conn->execute((new Insert($field->associativeTable, $entityFields))->toString(Config::get(Config::DB_NAME)));
@@ -144,7 +144,7 @@ class Entity extends AbstractEntity {
 					$fieldName = $field->name;
 					$entityList = $this->$fieldName;
 					if (is_array($entityList)) {
-						$referenceFieldName = $field->foreignFieldName;
+						$referenceFieldName = $field->referenceField->name;
 						foreach ( $entityList as $entity ) {
 							$entity->$referenceFieldName = $this;
 							$entity->insert($conn);
@@ -154,7 +154,7 @@ class Entity extends AbstractEntity {
 					$fieldName = $field->name;
 					$entity = $this->$fieldName;
 					if ($entity instanceof Entity) {
-						$referenceFieldName = $field->foreignFieldName;
+						$referenceFieldName = $field->referenceField->name;
 						$entity->$referenceFieldName = $this;
 						$entity->insert($conn);
 					}
@@ -167,7 +167,7 @@ class Entity extends AbstractEntity {
 			LogUtils::error($e);
 			throw $e;
 		}
-		
+
 		if ($endTransaction) {
 			$conn->commit();
 		}
@@ -182,7 +182,7 @@ class Entity extends AbstractEntity {
 	 */
 	public function update(DbConnection $conn, bool $activeTransaction = false) {
 		$discriminantFields = $this->discriminantFields();
-		
+
 		$fields = $this->getFields();
 		$entityFields = array ();
 		$extraFields = array ();
@@ -193,9 +193,9 @@ class Entity extends AbstractEntity {
 				$extraFields [] = $field;
 			}
 		}
-		
+
 		$rq = "UPDATE " . Config::get(Config::DB_NAME) . "." . static::TABLE_NAME . " SET ";
-		
+
 		$values = array ();
 		foreach ( $entityFields as $entityField ) {
 			if ($entityField instanceof ManyToOne) {
@@ -207,9 +207,9 @@ class Entity extends AbstractEntity {
 				$values [] = $entityField->sqlName . " = " . $this->convertEntityToSqlValue($entityField, $this);
 			}
 		}
-		
+
 		$rq .= implode(", ", $values) . " WHERE ";
-		
+
 		$conditions = array ();
 		foreach ( $discriminantFields as $discriminantField ) {
 			$fieldName = $discriminantField->name;
@@ -218,26 +218,26 @@ class Entity extends AbstractEntity {
 			}
 			$conditions [] = $discriminantField->sqlName . " = " . $this->convertEntityToSqlValue($discriminantField, $this);
 		}
-		
+
 		$rq .= implode(" AND ", $conditions);
-		
+
 		if (! $activeTransaction) {
 			$conn->startTransaction();
 		}
-		
+
 		try {
 			$conn->execute($rq);
-			
+
 			foreach ( $extraFields as $foreignField ) {
 				$fieldName = $foreignField->name;
 				$foreignEntity = $this->$fieldName;
-				
+
 				// TODO: manage multiple primary key
 				foreach ( $foreignField->linkFields as $referenceField ) {
 					$foreignFieldName = $referenceField->sqlName;
 					$foreignEntity->$foreignFieldName = $this->id;
 				}
-				
+
 				$foreignEntity->update($conn, true);
 			}
 		} catch ( \Exception $e ) {
@@ -247,7 +247,7 @@ class Entity extends AbstractEntity {
 			LogUtils::error($e);
 			throw $e;
 		}
-		
+
 		if (! $activeTransaction) {
 			$conn->commit();
 		}
@@ -265,16 +265,16 @@ class Entity extends AbstractEntity {
 		if ($conn === null) {
 			$conn = DbConnection::getInstance();
 		}
-		
+
 		$endTransaction = false;
 		if (! $conn->hasActiveTransaction()) {
 			$conn->startTransaction();
 			$endTransaction = true;
 		}
-		
+
 		$fields = static::getFields();
 		$entityFields = array ();
-		
+
 		try {
 			foreach ( $fields as $field ) {
 				if (! ($field instanceof AbstractAssociation))
@@ -321,7 +321,7 @@ class Entity extends AbstractEntity {
 					}
 				}
 			}
-			
+
 			$primaryTable = static::table();
 			$primaryDelete = new Delete($primaryTable);
 			$primaryDiscriminants = static::discriminantFields();
@@ -337,7 +337,7 @@ class Entity extends AbstractEntity {
 			LogUtils::error($e);
 			throw $e;
 		}
-		
+
 		if ($endTransaction) {
 			$conn->commit();
 		}
@@ -353,7 +353,7 @@ class Entity extends AbstractEntity {
 	 */
 	private function convertEntityToSqlValue(Field $field): string {
 		$fieldName = $field->name;
-		
+
 		if ($field instanceof ManyToOne) {
 			// TODO: manage multiple reference fields
 			$foreignFieldName = $field->linkFields [0]->sqlName;
@@ -361,7 +361,7 @@ class Entity extends AbstractEntity {
 		} else {
 			$entityValue = $this->$fieldName;
 		}
-		
+
 		return SqlUtils::addQuote($field, SqlUtils::ensureSqlValue($field, $entityValue));
 	}
 
@@ -375,7 +375,7 @@ class Entity extends AbstractEntity {
 	 */
 	private function convertForeignEntityToSqlValues(ManyToOne $field, Entity $entity): array {
 		$fieldName = $field->name;
-		
+
 		$result = array ();
 		foreach ( $field->linkFields as $referentField ) {
 			$result [$referentField->sqlName] = $this->convertEntityToSqlValue($referentField, $entity->$fieldName);
