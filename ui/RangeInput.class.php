@@ -23,7 +23,7 @@ class RangeInput extends Input {
 	 * @return RangeInput
 	 */
 	public function setMax(int $max) {
-		$this->arguments["max"] = $max;
+		$this->arguments ["max"] = $max;
 		return $this;
 	}
 }

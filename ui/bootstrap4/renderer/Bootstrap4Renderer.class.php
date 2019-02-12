@@ -34,15 +34,17 @@ class Bootstrap4Renderer extends DefaultRenderer {
 
 	public function __construct(string $label = null) {
 		$this->container = (new Container("div"));
-		$this->container->addClasses(array("row", "form-group"));
-		
+		$this->container->addClasses(array (
+				"row","form-group"
+		));
+
 		$this->elementContainer = new Container("div");
 		$this->labelContainer = new Container("div");
 		$this->label = new Label();
-		if($label != null) {
+		if ($label != null) {
 			$this->setLabelText($label . " : ");
 		}
-		
+
 		$this->labelContainer->addChild($this->label);
 	}
 
@@ -109,7 +111,7 @@ class Bootstrap4Renderer extends DefaultRenderer {
 		$this->labelContainer->addClass($class);
 		return $this;
 	}
-	
+
 	/**
 	 *
 	 * @param string $class
@@ -128,8 +130,6 @@ class Bootstrap4Renderer extends DefaultRenderer {
 	public function render(HtmlElement $element) {
 		$this->container->setId("container_" . $element->getId());
 		$this->elementContainer->addChild($element);
-		$this->container->addChild($this->labelContainer)
-			->addChild($this->elementContainer)
-			->render();
+		$this->container->addChild($this->labelContainer)->addChild($this->elementContainer)->render();
 	}
 }

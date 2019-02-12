@@ -1,10 +1,10 @@
 <?php
-
 namespace framework\exception;
 
 class SqlException extends \Exception {
+
 	/**
-	 * 
+	 *
 	 * @param string $sqlRequest
 	 * @param \Exception $previous
 	 */

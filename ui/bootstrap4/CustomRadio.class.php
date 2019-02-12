@@ -22,32 +22,28 @@ class CustomRadio extends Container {
 
 	public function __construct(string $name, $value = null, $labelText = null) {
 		parent::__construct("div");
-		
+
 		$this->radio = new Radio($name);
 		if ($value != null) {
-			$this->radio
-				->addClass("custom-control-input")
-				->setValue($value);
+			$this->radio->addClass("custom-control-input")->setValue($value);
 		}
-		
+
 		$this->label = (new Label())->addClass("custom-control-label");
 		if ($labelText != null) {
 			$this->label->setText($labelText);
 		}
-		
-		$this
-			->addChild($this->radio)
-			->addChild($this->label)
-			->addClass("custom-control custom-radio");
+
+		$this->addChild($this->radio)->addChild($this->label)->addClass("custom-control custom-radio");
 	}
-	
-	public function setInline(bool $inline) : CustomRadio {
-		if($inline) $this->addClass("custom-control-inline");
-		
+
+	public function setInline(bool $inline): CustomRadio {
+		if ($inline)
+			$this->addClass("custom-control-inline");
+
 		return $this;
 	}
-	
-	public function setDisabled(bool $disabled) : CustomRadio {
+
+	public function setDisabled(bool $disabled): CustomRadio {
 		$this->radio->setDisabled($disabled);
 		return $this;
 	}

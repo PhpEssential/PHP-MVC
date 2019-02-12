@@ -9,8 +9,7 @@ abstract class Control extends HtmlElement {
 	 * @param string $name
 	 */
 	public function __construct(string $name) {
-		$this->setName($name)
-			->setId($name);
+		$this->setName($name)->setId($name);
 	}
 
 	/**
@@ -22,7 +21,7 @@ abstract class Control extends HtmlElement {
 		if ($disabled) {
 			$this->putArgument("disabled");
 		} else {
-			unset($this->arguments["disabled"]);
+			unset($this->arguments ["disabled"]);
 		}
 		return $this;
 	}

@@ -2,17 +2,17 @@
 namespace framework\ui;
 
 class TextArea extends Control {
-	
+
 	/**
-	 * 
+	 *
 	 * @var string
 	 */
 	private $value;
-	
+
 	public function __construct(string $name) {
 		parent::__construct($name);
 	}
-	
+
 	/**
 	 *
 	 * @param int $cols
@@ -21,7 +21,7 @@ class TextArea extends Control {
 	public function setCols(int $cols) {
 		return $this->putArgument("cols", strval($rows));
 	}
-	
+
 	/**
 	 *
 	 * @param int $rows
@@ -32,14 +32,14 @@ class TextArea extends Control {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param int $rows
 	 * @return TextArea
 	 */
 	public function setRows(int $rows) {
 		return $this->putArgument("rows", strval($rows));
 	}
-	
+
 	/**
 	 *
 	 * @param string $value
@@ -49,7 +49,7 @@ class TextArea extends Control {
 		$this->value = $value;
 		return $this;
 	}
-	
+
 	/**
 	 *
 	 * @param string $placeholder
@@ -59,10 +59,10 @@ class TextArea extends Control {
 		$this->putArgument("placeholder", $placeholder);
 		return $this;
 	}
-	
+
 	/**
-	 * 
-	 * {@inheritDoc}
+	 *
+	 * {@inheritdoc}
 	 * @see HtmlElement::render()
 	 */
 	public function render() {

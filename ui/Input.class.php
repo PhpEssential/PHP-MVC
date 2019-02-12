@@ -34,7 +34,7 @@ class Input extends Control {
 	 * @return Input
 	 */
 	public function setValue($value) {
-		if($value != null) {
+		if ($value != null) {
 			$this->putArgument("value", $value);
 		}
 		return $this;

@@ -5,28 +5,27 @@ namespace framework\utils;
  * Classe utilitaire pour la création des interfaces utilisateur
  *
  */
-
 class UiUtils {
-	
+
 	/**
 	 * Permet de créer une UListe depuis une liste de données
-	 * 
+	 *
 	 * @param string[] $list
 	 */
 	public static function createUList(array $list){
-	    ?>
+		?>
 	    <ul>
-    	    <?php 
+    	    <?php
     	    foreach ($list as $item) {
     	        ?>
     	        <li><?php echo $item; ?></li>
-    	        <?php 
+    	        <?php
     	    }
     	    ?>
 	    </ul>
-	    <?php 
+	    <?php
 	}
-	
+
 	public static function createAlert(string $type, string $message) {
 		?>
 			<div class="alert alert-<?php echo $type; ?> alert-dismissible fade show" role="alert">
@@ -35,6 +34,6 @@ class UiUtils {
 			    <span aria-hidden="true">&times;</span>
 			  </button>
 			</div>
-		<?php 
+		<?php
 	}
 }

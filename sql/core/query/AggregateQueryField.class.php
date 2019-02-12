@@ -4,7 +4,6 @@ namespace framework\sql\core\query;
 use framework\sql\core\metadata\Field;
 
 class AggregateQueryField extends AliasedQueryField {
-
 	
 	/**
 	 * Aggregate function name
@@ -14,7 +13,7 @@ class AggregateQueryField extends AliasedQueryField {
 	private $function;
 
 	/**
-	 * 
+	 *
 	 * @param string $function
 	 * @param AliasedTable $table
 	 * @param Field $field

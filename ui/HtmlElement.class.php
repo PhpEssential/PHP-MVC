@@ -16,19 +16,19 @@ abstract class HtmlElement {
 	 *
 	 * @var array[string, string]
 	 */
-	private $style = array();
+	private $style = array ();
 
 	/**
 	 *
 	 * @var array[string, string]
 	 */
-	private $arguments = array();
+	private $arguments = array ();
 
 	/**
 	 *
 	 * @var string[]
 	 */
-	private $classes = array();
+	private $classes = array ();
 
 	/**
 	 *
@@ -73,7 +73,7 @@ abstract class HtmlElement {
 	 * @return HtmlElement
 	 */
 	public function putArgument(string $name, $value = null) {
-		$this->arguments[$name] = $value;
+		$this->arguments [$name] = $value;
 		return $this;
 	}
 
@@ -94,7 +94,7 @@ abstract class HtmlElement {
 	 */
 	public function getArgument(string $name) {
 		if (array_key_exists($name, $this->arguments)) {
-			return $this->arguments[$name];
+			return $this->arguments [$name];
 		}
 		return null;
 	}
@@ -121,7 +121,7 @@ abstract class HtmlElement {
 	 * @return HtmlElement
 	 */
 	public function addClass(string $class) {
-		$this->classes[] = $class;
+		$this->classes [] = $class;
 		return $this;
 	}
 
@@ -168,7 +168,8 @@ abstract class HtmlElement {
 	 * @return HtmlElement
 	 */
 	public function addStyle(string $name, string $value) {
-		$this->style + array($name => $value
+		$this->style + array (
+				$name => $value
 		);
 		return $this;
 	}
@@ -180,7 +181,7 @@ abstract class HtmlElement {
 	 */
 	public function getStyle(string $name) {
 		if (array_key_exists($name, $this->style)) {
-			return $this->style[$name];
+			return $this->style [$name];
 		}
 		return null;
 	}
@@ -212,7 +213,7 @@ abstract class HtmlElement {
 	public function draw() {
 		$this->renderer == null ? (new DefaultRenderer())->render($this) : $this->renderer->render($this);
 	}
-	
+
 	/**
 	 *
 	 * @return string
@@ -224,9 +225,9 @@ abstract class HtmlElement {
 		if (count($this->style) > 0) {
 			$this->putArgument("style", $this->prepareStyle());
 		}
-		
+
 		$strArgs = "";
-		foreach ($this->arguments as $name => $value) {
+		foreach ( $this->arguments as $name => $value ) {
 			$strArgs .= " " . $name;
 			if ($value != null) {
 				$strArgs .= "=\"$value\"";
@@ -241,10 +242,10 @@ abstract class HtmlElement {
 	 */
 	private function prepareStyle(): string {
 		$strStyle = "";
-		foreach ($this->style as $name => $value) {
+		foreach ( $this->style as $name => $value ) {
 			$strStyle .= $name . ":" . $value . " ";
 		}
-		return substr($strStyle, 0, -1);
+		return substr($strStyle, 0, - 1);
 	}
 
 	/**

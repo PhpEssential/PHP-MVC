@@ -8,7 +8,7 @@ class Checkbox extends Input {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bool $checked
 	 * @return Checkbox
 	 */

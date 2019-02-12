@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace framework\sql\core\metadata;
 
 /**
@@ -6,18 +6,18 @@ namespace framework\sql\core\metadata;
  */
 class Table {
 	
-    /**
-     * Name in database
-     * 
-     * @var string
-     */
-    private $sqlName;
-    
-    public function __construct(string $sqlName) {
-        $this->sqlName = $sqlName;
-    }
-    
-    public function getName() : string {
-    	return $this->sqlName;
-    }
+	/**
+	 * Name in database
+	 *
+	 * @var string
+	 */
+	private $sqlName;
+
+	public function __construct(string $sqlName) {
+		$this->sqlName = $sqlName;
+	}
+
+	public function getName(): string {
+		return $this->sqlName;
+	}
 }

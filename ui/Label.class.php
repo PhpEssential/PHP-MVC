@@ -2,7 +2,6 @@
 namespace framework\ui;
 
 class Label extends HtmlElement {
-
 	private $text = "";
 
 	/**

@@ -6,14 +6,7 @@ use framework\sql\models\Entity;
 /**
  * Represent a many to many association
  */
-class ManyToMany extends ExtraAssociation {
-	
-	/**
-	 * Insert, upade, delete associtions at same time as the primary entity
-	 *
-	 * @var LinkField[]
-	 */
-	public $cascadeAssociation = true;
+class ManyToManyRef extends ExtraAssociation {
 	
 	/**
 	 * Associative table
@@ -28,6 +21,13 @@ class ManyToMany extends ExtraAssociation {
 	 * @var LinkField[]
 	 */
 	public $primaryFields = array ();
+	
+	/**
+	 * Insert / Upade / Delete associtions if true
+	 *
+	 * @var LinkField[]
+	 */
+	public $cascadeAssociation = true;
 
 	/**
 	 *
@@ -44,18 +44,12 @@ class ManyToMany extends ExtraAssociation {
 	 * @param array $foreignFieldMap
 	 *        	- Foreign reference fields for link with the attribute
 	 */
-	function __construct(string $name, $foreignClass, string $associationTableName, array $primaryFields, array $foreignFields) {
+	function __construct(string $name, $foreignClass, ManyToMany $referenceField) {
 		parent::__construct($name, $foreignClass, self::createLinkFields($foreignFields));
 		$this->associativeTable = new Table($associationTableName);
 		$this->primaryFields = $this->createLinkFields($primaryFields);
 	}
 
-	/**
-	 * Insert, upade, delete associtions at same time as the primary entity
-	 *
-	 * @param bool $cascade
-	 * @return ManyToMany
-	 */
 	public function setCascadeAssciation(bool $cascade): ManyToMany {
 		$this->cascadeAssociation = $cascade;
 		return $this;

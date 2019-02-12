@@ -1,18 +1,34 @@
 <?php
 namespace framework\utils;
 
+/**
+ * Security functions
+ */
 class SecurityUtils {
-	
+
 	/**
-	 * 
-	 * @param int $length 64 minimum
+	 * Token generation
+	 *
+	 * @param int $length
+	 *        	- 64 minimum
+	 *
 	 * @return string
 	 */
-	public static function generateToken(int $length) : string {
+	public static function generateToken(int $length): string {
 		return bin2hex(openssl_random_pseudo_bytes($length));
 	}
-	
-	public static function hash($text, $salt){
+
+	/**
+	 * Hash generation
+	 *
+	 * @param string $text
+	 *        	- text to encrypt
+	 * @param string $salt
+	 *        	- salt encrypted in md5
+	 *
+	 * @return string
+	 */
+	public static function hash($text, $salt) {
 		return crypt($text, md5($salt));
 	}
 }
