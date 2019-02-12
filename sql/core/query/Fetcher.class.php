@@ -18,21 +18,21 @@ use framework\sql\models\Entity;
  * Represent one or many SQL Select instructions which are used to load model's data
  */
 class Fetcher {
-	
+
 	/**
 	 * Entity class
 	 *
 	 * @var string
 	 */
 	protected $entityClass;
-	
+
 	/**
 	 * Secondaries fetcher
 	 *
 	 * @var Fetcher[]
 	 */
 	private $extras = array ();
-	
+
 	/**
 	 * Primary select
 	 *
@@ -65,7 +65,7 @@ class Fetcher {
 	 *        	- If true that do not select all foreign entity's fields
 	 * @param bool $strict
 	 *        	- If true JOIN is generate else it is a LEFT OUTER JOIN
-	 *        	
+	 *
 	 * @return Fetcher
 	 */
 	public function fetch($path, bool $onlyDiscriminants = false, bool $strict = false): Fetcher {
@@ -80,7 +80,7 @@ class Fetcher {
 		if ($flatPath == "") {
 			throw new IllegalArgumentException("path", "empty path not allowed !");
 		}
-		
+
 		// Search corresponding select and adapt the search path
 		$fetcherData = $this->searchFetcher($flatPath);
 		if ($fetcherData != null) {
@@ -90,7 +90,7 @@ class Fetcher {
 			$searchPath = $flatPath;
 			$fetcher = $this;
 		}
-		
+
 		$select = $fetcher->select;
 		// Find field for this path
 		$field = $fetcher->entityClass::findField($searchPath);
@@ -124,7 +124,7 @@ class Fetcher {
 			// Create extra fetcher with foreign table, link with associative table and add foreign table's fields
 			$fetcher->addManyToMany($searchPath, $field, $onlyDiscriminants, false);
 		}
-		
+
 		return $this;
 	}
 
@@ -146,13 +146,13 @@ class Fetcher {
 	 */
 	private function addDirectAssociation(string $flatPath, DirectAssociation $field, AliasedTable $primaryTable, array $primaryFields, AliasedTable $foreignTable, array $foreignFields, bool $strict, bool $onlyDiscriminantFields) {
 		$select = $this->select;
-		
+
 		// Search discriminant fields of primary model
 		$primaryFields = $this->createQueryFields($primaryFields, $primaryTable);
-		
+
 		// Do the same for foreign model
 		$foreignFields = $this->createQueryFields($foreignFields, $foreignTable);
-		
+
 		// Create the condition
 		$conditions = new ConditionExpression();
 		foreach ( $field->linkFields as $referenceField ) {
@@ -164,7 +164,7 @@ class Fetcher {
 				}
 			}
 		}
-		
+
 		// Add the link and fields to the select
 		if ($field instanceof OneToOne) {
 			$select->addLink($primaryTable, $conditions, $strict);
@@ -183,23 +183,23 @@ class Fetcher {
 		$newFetcher = new Fetcher($field->foreignClass, $onlyDiscriminants);
 		$referenceFields = array ();
 		foreach ( $field->linkFields as $linkField ) {
-			$referenceFields [] = new Field($linkField->referenceField->name, $linkField->sqlName, $linkField->referenceField->dataType);
+			$referenceFields [] = new Field($field->referenceField->name . "-" . $linkField->referenceField->name, $linkField->sqlName, $linkField->referenceField->dataType);
 		}
 		$newFetcher->select->addFields($referenceFields);
-		
+
 		$this->extras [$flatPath] = $newFetcher;
-		
+
 		return $this;
 	}
 
 	private function addManyToMany(string $flatPath, ManyToMany $field, bool $onlyDiscriminants = false) {
 		// Create extra fetcher
 		$newFetcher = new Fetcher($field->foreignClass, $onlyDiscriminants);
-		
+
 		// Search discriminant fields of forgein entity
 		$foreignTable = $newFetcher->select->findTable();
 		$foreignFields = $newFetcher->select->findFields($field->foreignClass::discriminantFields(), $foreignTable);
-		
+
 		// And the same for the implicit associative entity
 		$associativeTable = $newFetcher->select->createAliasedTable(md5($field->associativeTable->getName()), $field->associativeTable);
 		$associativeReferenceFields = array ();
@@ -207,7 +207,7 @@ class Fetcher {
 			$associativeReferenceFields [] = new Field($linkField->referenceField->name, $linkField->sqlName, $linkField->referenceField->dataType);
 		}
 		$associativeReferenceFields = $newFetcher->createQueryFields($associativeReferenceFields, $associativeTable);
-		
+
 		// Create conditions
 		$foreignCondition = new ConditionExpression();
 		foreach ( $foreignFields as $foreignField ) {
@@ -219,15 +219,15 @@ class Fetcher {
 			}
 		}
 		$newFetcher->select->addLink($associativeTable, $foreignCondition, true);
-		
+
 		$associativePrimaryFields = array ();
 		foreach ( $field->primaryFields as $linkField ) {
 			$associativePrimaryFields [] = new Field($linkField->referenceField->name, $linkField->sqlName, $linkField->referenceField->dataType);
 		}
 		$newFetcher->select->addFields($associativePrimaryFields, md5($field->associativeTable->getName()));
-		
+
 		$this->extras [$flatPath] = $newFetcher;
-		
+
 		return $this;
 	}
 
@@ -246,7 +246,7 @@ class Fetcher {
 			$searchPath = substr($flatPath, count($selectPath) + 1);
 			$fetcher = $this->extras [$selectPath];
 		}
-		
+
 		if ($fetcher->select->hasField($searchPath)) {
 			return $fetcher->select->findField($searchPath);
 		} else {
@@ -265,7 +265,7 @@ class Fetcher {
 		$flatPath = is_string($path) ? $path : implode("-", $path);
 		$select = null;
 		$searchPath = null;
-		
+
 		$fetcherData = $this->searchFetcher($flatPath);
 		if ($fetcherData == null)
 			return $this->select->findTable($flatPath);
@@ -298,14 +298,14 @@ class Fetcher {
 		$dbName = Config::get(Config::DB_NAME);
 		$query = $this->select->toString($dbName);
 		$primaryResults = $conn->execute($query);
-		
+
 		if ($primaryResults === null)
 			return null;
-		
+
 		$rowCount = count($primaryResults);
 		if ($rowCount == 0)
 			return array ();
-		
+
 		return $this->processResult($primaryResults, $conn, $dbName);
 	}
 
@@ -320,14 +320,14 @@ class Fetcher {
 		$this->select->setLimit(1);
 		$query = $this->select->toString($dbName);
 		$primaryResults = $conn->execute($query);
-		
+
 		if ($primaryResults == null)
 			return null;
-		
+
 		$rowCount = count($primaryResults);
 		if ($rowCount == 0)
 			return null;
-		
+
 		$entities = $this->processResult($primaryResults, $conn, $dbName);
 		return $entities [0];
 	}
@@ -344,19 +344,19 @@ class Fetcher {
 		$dbName = Config::get(Config::DB_NAME);
 		$query = $this->select->toString($dbName);
 		$primaryResults = $conn->execute($query);
-		
+
 		if ($primaryResults === null)
 			return null;
-		
+
 		$rowCount = count($primaryResults);
 		if ($rowCount == 0)
 			return null;
-		
+
 		$entities = $this->processResult($primaryResults, $conn, $dbName);
-		
+
 		if (count($entities) != 1)
 			throw new SqlException($query, new \Exception("this query return more than one entity"));
-		
+
 		return $entities [0];
 	}
 
@@ -376,14 +376,14 @@ class Fetcher {
 	private function processResult(array $rows, DbConnection $conn, string $dbName): array {
 		if (count($rows) == 0)
 			return array ();
-		
+
 		$entities = array ();
 		foreach ( $rows as $row )
 			$entities [] = $this->buildEntity($row);
-		
+
 		if (count($this->extras) > 0)
 			$this->processExtra($entities, $conn, $dbName);
-		
+
 		return $entities;
 	}
 
@@ -396,7 +396,7 @@ class Fetcher {
 	private function processExtra(array &$entities, DbConnection $conn, string $dbName) {
 		$discriminants = $this->entityClass::discriminantFields();
 		$discriminantValues = array ();
-		
+
 		// Find discriminant values of entities
 		foreach ( $discriminants as $discriminant ) {
 			$discriminantField = $this->select->findField($discriminant->name)->field->name;
@@ -406,11 +406,11 @@ class Fetcher {
 				$discriminantValues [$discriminantField] [] = $entity->$fieldName;
 			}
 		}
-		
+
 		// Execute and load all extra queries
 		$lazyEntities = array ();
 		foreach ( $this->extras as $flatPath => $fetcher ) {
-			
+
 			// Create conditions with entities's discriminant values
 			$listField = $this->entityClass::findField($flatPath);
 			if ($listField instanceof ManyToMany) {
@@ -429,13 +429,18 @@ class Fetcher {
 			$extraCondition = $fetcher->findConditions();
 			foreach ( $discriminants as $discriminant ) {
 				foreach ( $linkFields as $linkField ) {
-					if ($linkField->field->name == $discriminant->name) {
+					if($listField instanceof OneToMany) {
+						$fieldName = explode("-", $linkField->field->name)[1];
+					} else {
+						$fieldName = $linkField->field->name;
+					}
+					if ($fieldName == $discriminant->name) {
 						$extraCondition->in($linkField, $discriminantValues [$discriminant->name]);
 						break;
 					}
 				}
 			}
-			
+
 			// Fetch and load the list
 			$fetcher->findExtraList($listField, $entities, $linkFields, $conn, $dbName, $dbName);
 		}
@@ -444,7 +449,7 @@ class Fetcher {
 	private function findExtraList(ExtraAssociation $field, array &$parentEntities, array $discriminants, DbConnection $conn, string $dbName) {
 		$query = $this->select->toString($dbName);
 		$primaryResults = $conn->execute($query);
-		
+
 		$rowCount = count($primaryResults);
 		if ($rowCount != 0)
 			$this->processExtraResult($field, $parentEntities, $discriminants, $primaryResults, $conn, $dbName);
@@ -461,7 +466,7 @@ class Fetcher {
 	private function processExtraResult(ExtraAssociation $field, array &$parentEntities, array $discriminants, array $rows, DbConnection $conn, string $dbName) {
 		if (count($rows) == 0)
 			return array ();
-		
+
 		$fieldName = $field->name;
 		$entities = array ();
 		foreach ( $rows as $row ) {
@@ -469,7 +474,11 @@ class Fetcher {
 			foreach ( $parentEntities as $entity ) {
 				$itIsIt = true;
 				foreach ( $discriminants as $discriminant ) {
-					$discriminantName = $discriminant->field->name;
+					if($field instanceof OneToMany) {
+						$discriminantName = explode("-", $discriminant->field->name)[1];
+					} else {
+						$discriminantName = $discriminant->field->name;
+					}
 					if ($entity->$discriminantName != $row [$discriminant->getAlias()]) {
 						$itIsIt = false;
 						break;
@@ -478,15 +487,15 @@ class Fetcher {
 				if ($itIsIt)
 					$parentEntity = $entity;
 			}
-			
+
 			$entity = $this->buildEntity($row);
-			
+
 			if (! isset($parentEntity->$fieldName))
 				$parentEntity->$fieldName = array ();
 			$parentEntity->$fieldName [] = $entity;
 			$entities [] = $entity;
 		}
-		
+
 		if (count($this->extras) > 0)
 			$this->processExtra($entities, $conn, $dbName);
 	}
@@ -523,7 +532,7 @@ class Fetcher {
 		} else {
 			if (! array_key_exists($step, $data))
 				$data [$step] = array ();
-			
+
 			$this::setStepValue($path, $queryField, $data [$step], $row, $stepIndex + 1);
 		}
 	}
@@ -539,7 +548,7 @@ class Fetcher {
 	private function getSqlValueForEntity(Field $field, string $sqlValue = null) {
 		if ($sqlValue == null)
 			return null;
-		
+
 		switch ($field->dataType) {
 			case Field::DATE :
 				return new \DateTime($sqlValue);
@@ -614,7 +623,7 @@ class Fetcher {
 		foreach ( $this->extras as $extraPath => $fetcher ) {
 			if ($extraPath == $path) {
 				return array (
-						$extraPath,$fetcher 
+						$extraPath,$fetcher
 				);
 			} else {
 				$explodePath = explode("-", $path);

@@ -9,54 +9,54 @@ use framework\sql\core\metadata\Table;
  * Represent a SQL Select instructions which is used to load entity's data
  */
 class Select {
-	
+
 	/**
 	 * Selected entities fields
 	 *
 	 * @var array[string][AliasedQueryField]
 	 */
 	private $fields = array ();
-	
+
 	/**
 	 * Aliased entity table in FROM clause
 	 *
 	 * @var AliasedTable
 	 */
 	private $table;
-	
+
 	/**
 	 * Represent JOIN clause
 	 *
 	 * @var array[string][Join]
 	 */
 	private $links = array ();
-	
+
 	/**
 	 *
 	 * @var int|null
 	 */
 	private $limit = null;
-	
+
 	/**
 	 *
 	 * @var int|null
 	 */
 	private $offset = null;
-	
+
 	/**
 	 * Represent WHERE clause
 	 *
 	 * @var ConditionExpression
 	 */
 	public $conditions;
-	
+
 	/**
 	 * Represent ORDER BY clause
 	 *
 	 * @var OrderedField[]
 	 */
 	private $orderedFields = array ();
-	
+
 	/**
 	 * Counter for table alias generation
 	 *
@@ -104,7 +104,7 @@ class Select {
 	 */
 	public function addField(Field $field, string $path = ""): Select {
 		$this->addFields(array (
-				$field 
+				$field
 		), $path);
 		return $this;
 	}
@@ -174,11 +174,11 @@ class Select {
 	public function findTable(string $path = ""): AliasedTable {
 		if ($path == "")
 			return $this->table;
-		
+
 		if (array_key_exists($path, $this->links))
 			return $this->links [$path]->table;
-		
-		throw new IllegalArgumentException("path", "no table for this path: " . $alias);
+
+		throw new IllegalArgumentException("path", "no table for this path: " . $path);
 	}
 
 	/**
@@ -236,7 +236,7 @@ class Select {
 		$select->links = $this->links;
 		$select->tableAliasCount = $this->tableAliasCount;
 		$select->conditions = $this->conditions;
-		
+
 		return $select;
 	}
 
@@ -251,21 +251,21 @@ class Select {
 			$sql .= $field->toString() . ",";
 		}
 		$sql = substr($sql, 0, strlen($sql) - 1);
-		
+
 		$sql .= " FROM `" . $dbName . "`.`" . $this->table->getTable()->getName() . "` " . $this->table->getAlias() . " ";
 		foreach ( $this->links as $tableKey => $link ) {
 			$sql .= $link->toString($dbName) . " ";
 		}
-		
+
 		$conditionStr = $this->conditions->toString();
 		$sql .= ($conditionStr == "") ? "" : "WHERE " . $conditionStr;
-		
+
 		$orderClause = "";
 		foreach ( $this->orderedFields as $orderedField ) {
 			$orderClause .= $orderedField->toString() . ",";
 		}
 		$sql .= ($orderClause == "") ? "" : "ORDER BY " . substr($orderClause, 0, strlen($orderClause) - 1) . " ";
-		
+
 		$limitClause = "";
 		if ($this->limit != null && $this->offset != null) {
 			$limitClause = $this->offset . "," . $this->limit;
@@ -275,7 +275,7 @@ class Select {
 			$limitClause = $this->offset . ",18446744073709551615";
 		}
 		$sql .= ($limitClause == "") ? "" : "LIMIT " . $limitClause . " ";
-		
+
 		return $sql;
 	}
 
