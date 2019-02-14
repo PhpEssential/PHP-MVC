@@ -1,11 +1,11 @@
 <?php
 namespace framework\ui\form;
 
-use framework\exception\IllegalArgumentException;
-use framework\utils\LogUtils;
 use framework\Config;
+use framework\exception\IllegalArgumentException;
 use framework\internationalization\Message;
 use framework\utils\FileUtils;
+use framework\utils\LogUtils;
 
 /**
  * Classe permettant de définir un objet comme étant assignable depuis une requète HTTP
@@ -90,19 +90,22 @@ abstract class Bindable {
 	}
 
 	protected function bindListField(string $fieldName, array $data, int $dataType, bool $required = false): bool {
-		$this->$fieldName = null;
+		$this->$fieldName = array ();
 		$valid = true;
+		$present = false;
 
 		try {
 			if ($required && isset($data [$fieldName])) {
 				$valid = true;
+				$present = true;
 			} else if (isset($data [$fieldName])) {
 				$valid = true;
+				$present = true;
 			} else if ($required) {
 				$valid = false;
 			}
 
-			if ($valid) {
+			if ($valid && $present) {
 				$this->$fieldName = array ();
 				foreach ( $data [$fieldName] as $item ) {
 					$this->$fieldName [] = $this->parseValue($item, $dataType);
