@@ -1,8 +1,6 @@
 <?php
 namespace framework\utils;
 
-use framework\Config;
-
 class FileUtils {
 
 	public static function checkFile($postedFile, array $allowedExt, int $sizeLimit) {
@@ -56,7 +54,7 @@ class FileUtils {
 			if (! move_uploaded_file($postedFile ['tmp_name'], sprintf(APP_ROOT . "images" . DS . "uploads" . DS . "%s.%s", $fileName, $ext))) {
 				throw new \RuntimeException('Failed to move uploaded file.');
 			}
-			return $fileName;
+			return $fileName . "." . $ext;
 		} catch ( \Exception $e ) {
 			throw $e;
 		}
