@@ -5,73 +5,60 @@ use framework\Config;
 
 class FileUtils {
 
-	public static function checkFile($postedFile, $allowedExt) {
-		try {
-			// Undefined | Multiple Files | $_FILES Corruption Attack
-			// If this request falls under any of them, treat it invalid.
-			if (! isset($postedFile ['error']) || is_array($postedFile ['error'])) {
-				throw new \RuntimeException('Invalid parameters.');
-			}
-			
-			// Check $_FILES['upfile']['error'] value.
-			switch ($postedFile ['error']) {
-				case UPLOAD_ERR_OK :
-					break;
-				case UPLOAD_ERR_NO_FILE :
-					throw new \RuntimeException('No file sent.');
-				case UPLOAD_ERR_INI_SIZE :
-				case UPLOAD_ERR_FORM_SIZE :
-					throw new \RuntimeException('Exceeded filesize limit.');
-				default :
-					throw new \RuntimeException('Unknown errors.');
-			}
-			
-			// You should also check filesize here.
-			if ($postedFile ['size'] > 1000000) {
+	public static function checkFile($postedFile, array $allowedExt, int $sizeLimit) {
+		// Undefined | Multiple Files | $_FILES Corruption Attack
+		// If this request falls under any of them, treat it invalid.
+		if (! isset($postedFile ['error']) || is_array($postedFile ['error'])) {
+			throw new \RuntimeException('Invalid parameters.');
+		}
+
+		// Check errors.
+		switch ($postedFile ['error']) {
+			case UPLOAD_ERR_OK :
+				break;
+			case UPLOAD_ERR_NO_FILE :
+				throw new \RuntimeException('No file sent.');
+			case UPLOAD_ERR_INI_SIZE :
+			case UPLOAD_ERR_FORM_SIZE :
 				throw new \RuntimeException('Exceeded filesize limit.');
-			}
-			
-			$extAllowed = array (
-					'jpg' => 'image/jpeg','png' => 'image/png','gif' => 'image/gif' 
-			);
-			
-			// DO NOT TRUST $_FILES['upfile']['mime'] VALUE !!
-			// Check MIME Type by yourself.
-			$finfo = new \finfo(FILEINFO_MIME_TYPE);
-			if (false === array_search($finfo->file($postedFile ['tmp_name']), $extAllowed, true)) {
-				throw new \RuntimeException('Invalid file format.');
-			}
-		} catch ( \Exception $e ) {
-			throw $e;
+			default :
+				throw new \RuntimeException('Unknown errors.');
+		}
+
+		// Check filesize.
+		if ($postedFile ['size'] > $sizeLimit) {
+			throw new \RuntimeException('Exceeded filesize limit.');
+		}
+
+		// Check MIME Type.
+		$finfo = new \finfo(FILEINFO_MIME_TYPE);
+		if (false === array_search($finfo->file($postedFile ['tmp_name']), $allowedExt, true)) {
+			throw new \RuntimeException('Invalid file format.');
 		}
 	}
 
-	public static function uploadFile($postedFile) {
+	/**
+	 *
+	 * @param mixed $postedFile
+	 *        	- File receive into $_FILES
+	 *
+	 * @throws \RuntimeException
+	 * @throws \Exception
+	 *
+	 * @return string - File name
+	 */
+	public static function uploadFile($postedFile): string {
 		try {
-			$extAllowed = array (
-					'jpg' => 'image/jpeg','png' => 'image/png','gif' => 'image/gif' 
-			);
-			
-			// DO NOT TRUST $_FILES['upfile']['mime'] VALUE !!
-			// Check MIME Type by yourself.
-			$finfo = new \finfo(FILEINFO_MIME_TYPE);
-			if (false === $ext = array_search($finfo->file($postedFile ['tmp_name']), $extAllowed, true)) {
-				throw new \RuntimeException('Invalid file format.');
-			}
-			
-			// You should name it uniquely.
-			// DO NOT USE $_FILES['upfile']['name'] WITHOUT ANY VALIDATION !!
-			// On this example, obtain safe unique name from its binary data.
-			$fileName = sha1_file($postedFile ['tmp_name']);
-			if (! move_uploaded_file($postedFile ['tmp_name'], sprintf(self::getRootPath() . "images/uploads/%s.%s", $fileName, $ext))) {
+			// Generate token for file name
+			$fileName = SecurityUtils::generateToken(64);
+			$postedFileName = $postedFile ['name'];
+			$ext = strtolower(pathinfo($postedFileName, PATHINFO_EXTENSION));
+			if (! move_uploaded_file($postedFile ['tmp_name'], sprintf(APP_ROOT . "images" . DS . "uploads" . DS . "%s.%s", $fileName, $ext))) {
 				throw new \RuntimeException('Failed to move uploaded file.');
 			}
+			return $fileName;
 		} catch ( \Exception $e ) {
 			throw $e;
 		}
-	}
-
-	public static function getRootPath() {
-		return $_SERVER ['DOCUMENT_ROOT'] . Config::get(Config::ROOT_PATH);
 	}
 }

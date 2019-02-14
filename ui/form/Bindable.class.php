@@ -5,6 +5,7 @@ use framework\exception\IllegalArgumentException;
 use framework\utils\LogUtils;
 use framework\Config;
 use framework\internationalization\Message;
+use framework\utils\FileUtils;
 
 /**
  * Classe permettant de définir un objet comme étant assignable depuis une requète HTTP
@@ -125,6 +126,31 @@ abstract class Bindable {
 			} else if (isset($data [$fieldName])) {
 				$this->$fieldName = $this->parseValue($data [$fieldName], $dataType);
 				$valid = true;
+			} else if ($required) {
+				$valid = false;
+			}
+		} catch ( \Exception $e ) {
+			LogUtils::error($e);
+			$valid = false;
+		}
+		return $valid;
+	}
+
+	protected function bindFile(string $fieldName, array $data, array $allowedExt, int $fileSize, bool $required = false): bool {
+		$this->$fieldName = null;
+		$valid = true;
+
+		try {
+			if ($required && isset($data [$fieldName])) {
+				$file = $data [$fieldName];
+				FileUtils::checkFile($file, $allowedExt, $fileSize);
+				$this->$fieldName = $file;
+				$valid = ($file != null);
+			} else if (isset($data [$fieldName])) {
+				$file = $data [$fieldName];
+				FileUtils::checkFile($file, $allowedExt, $fileSize);
+				$this->$fieldName = $file;
+				$valid = ($file != null);
 			} else if ($required) {
 				$valid = false;
 			}
