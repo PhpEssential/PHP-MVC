@@ -2,7 +2,6 @@
 namespace framework\internationalization;
 
 use framework\Config;
-use framework\utils\FileUtils;
 use framework\utils\LogUtils;
 
 class Message {
@@ -40,7 +39,7 @@ class Message {
 	private $params = array ();
 
 	private function __construct(string $fileName, string $local) {
-		$filePath = FileUtils::getRootPath() . "conf" . DS . $fileName . ".ini";
+		$filePath = APP_ROOT . "conf" . DS . $fileName . ".ini";
 		if (file_exists($filePath)) {
 			$this->params = parse_ini_file($filePath);
 		} else {
