@@ -117,8 +117,14 @@ class Entity extends AbstractEntity {
 			$this->setDiscriminantValue($conn);
 
 			foreach ( $fields as $field ) {
-				if (! ($field instanceof AbstractAssociation) || ! $field->cascade)
+				if (! ($field instanceof AbstractAssociation))
 					continue;
+				if (($field instanceof ManyToMany)) {
+					if (! $field->cascadeAssociation)
+						continue;
+				} else if (! $field->cascade)
+					continue;
+
 				if ($field instanceof ManyToMany) {
 					$fieldName = $field->name;
 					$entityList = $this->$fieldName;

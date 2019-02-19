@@ -7,21 +7,21 @@ use framework\sql\models\Entity;
  * Represent a many to many association
  */
 class ManyToMany extends ExtraAssociation {
-	
+
 	/**
 	 * Insert, upade, delete associtions at same time as the primary entity
 	 *
-	 * @var LinkField[]
+	 * @var bool
 	 */
 	public $cascadeAssociation = true;
-	
+
 	/**
 	 * Associative table
 	 *
 	 * @var Table
 	 */
 	public $associativeTable;
-	
+
 	/**
 	 * Primary reference fields
 	 *
