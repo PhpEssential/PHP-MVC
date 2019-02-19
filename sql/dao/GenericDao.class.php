@@ -10,7 +10,7 @@ use framework\sql\models\GenericEntity;
  * Dao which work with GenericEntity
  */
 abstract class GenericDao {
-	
+
 	/**
 	 * Class of the model
 	 *
@@ -55,7 +55,7 @@ abstract class GenericDao {
 	 *        	model à supprimer
 	 * @throws \Exception
 	 */
-	public function delete(Entity $entity) {
+	public function delete($entity) {
 		$entity->delete();
 	}
 
@@ -90,7 +90,7 @@ abstract class GenericDao {
 		} catch ( \Exception $e ) {
 			throw $e;
 		}
-		
+
 		return $result;
 	}
 
