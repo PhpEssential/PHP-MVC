@@ -42,12 +42,15 @@ class FileUtils {
 	 *
 	 * @throws \RuntimeException
 	 * @throws \Exception
-	 *
-	 * @return string - File name
 	 */
-	public static function removeUploadedFile(string $fileName): string {
-		if(! unlink(sprintf(APP_ROOT . "images" . DS . "uploads" . DS . "%s", $fileName))) {
-			throw new \RuntimeException('Failed to remove file.');
+	public static function removeUploadedFile(string $fileName) {
+		$filePath = sprintf(APP_ROOT . "images" . DS . "uploads" . DS . "%s", $fileName);
+		if (! file_exists($filePath)) {
+			LogUtils::warning("File not found: " . $filePath);
+		} else {
+			if (! unlink($filePath)) {
+				throw new \RuntimeException('Failed to remove file.');
+			}
 		}
 	}
 
