@@ -37,6 +37,22 @@ class FileUtils {
 
 	/**
 	 *
+	 * @param string $fileName
+	 *        	- Name of file to delete
+	 *
+	 * @throws \RuntimeException
+	 * @throws \Exception
+	 *
+	 * @return string - File name
+	 */
+	public static function removeUploadedFile(string $fileName): string {
+		if(! unlink(sprintf(APP_ROOT . "images" . DS . "uploads" . DS . "%s", $fileName))) {
+			throw new \RuntimeException('Failed to remove file.');
+		}
+	}
+
+	/**
+	 *
 	 * @param mixed $postedFile
 	 *        	- File receive into $_FILES
 	 *
