@@ -8,6 +8,10 @@ class LogUtils {
 		error_log($str);
 	}
 
+	public static function info(string $message) {
+		error_log("[INFO] " . $message);
+	}
+
 	public static function warning(string $message) {
 		error_log("[WARNING] " . $message);
 	}
