@@ -7,7 +7,7 @@ class Radio extends Input {
 		parent::__construct("radio", $name, "custom-control-input");
 	}
 
-	public function setChecked(bool $checked): Checkbox {
+	public function setChecked(bool $checked): Radio {
 		$this->putArgument("checked");
 		return $this;
 	}
