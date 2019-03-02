@@ -5,21 +5,21 @@ namespace framework\sql\core\query;
  * Représentation d'une jointure SQL
  */
 class Join {
-	
+
 	/**
 	 * Type de la jointure
 	 *
 	 * @var string
 	 */
 	public $joinType;
-	
+
 	/**
 	 * Table avec alias
 	 *
 	 * @var AliasedTable
 	 */
 	public $table;
-	
+
 	/**
 	 * Condition de jointure
 	 *
@@ -39,14 +39,6 @@ class Join {
 	 * @return string
 	 */
 	public function toString(string $dbName): string {
-		return $this->joinType .
-				" `" .
-				$dbName .
-				"`.`" .
-				$this->table->getTable()->getName() .
-				"` " .
-				$this->table->getAlias() .
-				" ON " .
-				$this->conditions->toString();
+		return $this->joinType . " `" . $dbName . "`.`" . $this->table->getTable()->getName() . "` " . $this->table->getAlias() . " ON " . $this->conditions->toString();
 	}
 }
