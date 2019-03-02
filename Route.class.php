@@ -2,17 +2,53 @@
 namespace framework;
 
 use framework\sql\core\DbConnection;
+use framework\utils\LogUtils;
 
 /**
- * Classe facilitant les redirection ainsi que les créations d'url
- *
- * @author Vince
- *
+ * Url route management
  */
 class Route {
 
+	private static $instance = null;
+
+	private $routeMap = array();
+
 	/**
-	 * Retourne un code HTTP 404
+	 * Create the route map here
+	 */
+	protected function __construct() {
+	}
+
+	protected function addRouteMap(string $url, $function) {
+		$this->routeMap[$url] = $function;
+	}
+
+	public static function getInstance() : Route {
+		if(self::$instance == null) {
+			$class = static::class;
+			self::$instance = new $class();
+		}
+		return self::$instance;
+	}
+
+
+	public function runController(string $url){
+		if(!array_key_exists($url, $this->routeMap)) {
+			self::notFound();
+		}
+
+		$function = $this->routeMap[$url];
+		try{
+			$function();
+		} catch (\Exception $e) {
+			LogUtils::error($e);
+			Route::internalServerError();
+		}
+		self::closeBdd();
+	}
+
+	/**
+	 * Return a responde code 500
 	 */
 	public static function internalServerError() {
 		self::closeBdd();
@@ -21,7 +57,7 @@ class Route {
 	}
 
 	/**
-	 * Retourne un code HTTP 404
+	 * Return a response code 404
 	 */
 	public static function notFound() {
 		self::closeBdd();
