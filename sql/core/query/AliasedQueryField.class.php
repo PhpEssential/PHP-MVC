@@ -7,10 +7,10 @@ use framework\sql\core\metadata\Field;
  * champs sql associé à une table
  *
  * @author Vince
- *        
+ *
  */
 class AliasedQueryField extends QueryField {
-	
+
 	/**
 	 * Alias du champ SQL
 	 *
@@ -34,6 +34,6 @@ class AliasedQueryField extends QueryField {
 	}
 
 	public function toString() {
-		return $this->getAccessString() . ' "' . $this->alias . '"';
+		return $this->getAccessString() . ' `' . $this->alias . '`';
 	}
 }
