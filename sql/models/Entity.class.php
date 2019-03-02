@@ -19,6 +19,7 @@ use framework\sql\core\query\QueryField;
 use framework\sql\utils\SqlUtils;
 use framework\utils\LogUtils;
 use framework\sql\core\metadata\AbstractField;
+use framework\sql\core\query\Update;
 
 /**
  * Representation of datable row,
@@ -119,7 +120,7 @@ class Entity extends AbstractEntity {
 			foreach ( $fields as $field ) {
 				if (! ($field instanceof AbstractAssociation))
 					continue;
-				if (($field instanceof ManyToMany)) {
+				if ($field instanceof ManyToMany) {
 					if (! $field->cascadeAssociation)
 						continue;
 				} else if (! $field->cascade)
@@ -186,75 +187,124 @@ class Entity extends AbstractEntity {
 	 *        	DbConnection
 	 * @throws \Exception
 	 */
-	public function update(DbConnection $conn, bool $activeTransaction = false) {
-		$discriminantFields = $this->discriminantFields();
-
-		$fields = $this->getFields();
-		$entityFields = array ();
-		$extraFields = array ();
-		foreach ( $fields as $field ) {
-			if ($field instanceof ManyToOne && $field->dir == ManyToOne::DIR_MODEL_TO_ANOTHER || ! ($field instanceof ManyToOne)) {
-				$entityFields [] = $field;
-			} else {
-				$extraFields [] = $field;
-			}
+	public function update(DbConnection $conn = null) {
+		if ($conn === null) {
+			$conn = DbConnection::getInstance();
 		}
 
-		$rq = "UPDATE " . Config::get(Config::DB_NAME) . "." . static::TABLE_NAME . " SET ";
-
-		$values = array ();
-		foreach ( $entityFields as $entityField ) {
-			if ($entityField instanceof ManyToOne) {
-				$fieldName = $entityField->name;
-				foreach ( $entityField->linkFields as $referenceField ) {
-					$values [] = $entityField->sqlName . " = " . $this->convertEntityToSqlValue($referenceField, $this->$fieldName);
-				}
-			} else {
-				$values [] = $entityField->sqlName . " = " . $this->convertEntityToSqlValue($entityField, $this);
-			}
-		}
-
-		$rq .= implode(", ", $values) . " WHERE ";
-
-		$conditions = array ();
-		foreach ( $discriminantFields as $discriminantField ) {
-			$fieldName = $discriminantField->name;
-			if ($this->$fieldName == null) {
-				throw new IllegalAccessException("discriminant value not set !");
-			}
-			$conditions [] = $discriminantField->sqlName . " = " . $this->convertEntityToSqlValue($discriminantField, $this);
-		}
-
-		$rq .= implode(" AND ", $conditions);
-
-		if (! $activeTransaction) {
+		$endTransaction = false;
+		if (! $conn->hasActiveTransaction()) {
 			$conn->startTransaction();
+			$endTransaction = true;
+		}
+
+		$fields = static::getFields();
+		$entityFields = array ();
+
+		foreach ( $fields as $field ) {
+			if ($field instanceof Field) {
+				$fieldName = $field->name;
+				$value = $this->$fieldName;
+				$entityFields [$field->sqlName] = array (
+						$field,$value
+				);
+			} else if ($field instanceof ManyToOne || $field instanceof OneToOneRef) {
+				$fieldName = $field->name;
+				$foreignEntity = $this->$fieldName;
+
+				foreach ( $field->linkFields as $linkField ) {
+					if ($foreignEntity === null) {
+						$value = null;
+					} else {
+						$foreignFieldName = $linkField->referenceField->name;
+						$value = $foreignEntity->$foreignFieldName;
+					}
+					$entityFields [$linkField->sqlName] = array (
+							$linkField->referenceField,$value
+					);
+				}
+			}
 		}
 
 		try {
-			$conn->execute($rq);
+			$table = static::table();
+			$update = new Update($table, $entityFields);
+			$aliasedTable = new AliasedTable($table->getName(), "", $table);
+			foreach (static::discriminantFields() as $discriminant) {
+				$fieldName = $discriminant->name;
+				$update->conditions->eq(new QueryField($aliasedTable, $discriminant), $this->$fieldName);
+			}
+			$conn->execute($update->toString(Config::get(Config::DB_NAME)));
 
-			foreach ( $extraFields as $foreignField ) {
-				$fieldName = $foreignField->name;
-				$foreignEntity = $this->$fieldName;
+			foreach ( $fields as $field ) {
+				if (! ($field instanceof AbstractAssociation))
+					continue;
+				if (($field instanceof ManyToMany)) {
+					if (! $field->cascadeAssociation)
+						continue;
+				} else if (! $field->cascade)
+					continue;
 
-				// TODO: manage multiple primary key
-				foreach ( $foreignField->linkFields as $referenceField ) {
-					$foreignFieldName = $referenceField->sqlName;
-					$foreignEntity->$foreignFieldName = $this->id;
+				if ($field instanceof ManyToMany) {
+					$fieldName = $field->name;
+					$entityList = $this->$fieldName;
+					// TODO: Find way to detect and identify modification instead of deleted old and insert new
+					// First delete old associations
+					$associationDelete = new Delete($field->associativeTable);
+					foreach ( $field->primaryFields as $linkField ) {
+						$linkFieldName = $linkField->referenceField->name;
+						$associationDelete->conditions->eq(new QueryField(new AliasedTable($field->associativeTable->getName(), "", $field->associativeTable), new Field($linkFieldName, $linkField->sqlName, $linkField->referenceField->dataType)), $this->$linkFieldName);
+					}
+					$conn->execute($associationDelete->toString(Config::get(Config::DB_NAME)));
+
+					// And insert new ones
+					if (is_array($entityList)) {
+						$entityFields = array ();
+						foreach ( $entityList as $entity ) {
+							foreach ( $field->linkFields as $linkField ) {
+								$linkFieldName = $linkField->referenceField->name;
+								$entityFields [$linkField->sqlName] = array (
+										$linkField->referenceField,$entity->$linkFieldName
+								);
+							}
+							foreach ( $field->primaryFields as $linkField ) {
+								$linkFieldName = $linkField->referenceField->name;
+								$entityFields [$linkField->sqlName] = array (
+										$linkField->referenceField,$this->$linkFieldName
+								);
+							}
+							$conn->execute((new Insert($field->associativeTable, $entityFields))->toString(Config::get(Config::DB_NAME)));
+						}
+					}
+				} else if ($field instanceof OneToMany) {
+					$fieldName = $field->name;
+					$entityList = $this->$fieldName;
+					if (is_array($entityList)) {
+						$referenceFieldName = $field->referenceField->name;
+						foreach ( $entityList as $entity ) {
+							$entity->$referenceFieldName = $this;
+							$entity->update($conn);
+						}
+					}
+				} else if ($field instanceof OneToOne) {
+					$fieldName = $field->name;
+					$entity = $this->$fieldName;
+					if ($entity instanceof Entity) {
+						$referenceFieldName = $field->referenceField->name;
+						$entity->$referenceFieldName = $this;
+						$entity->update($conn);
+					}
 				}
-
-				$foreignEntity->update($conn, true);
 			}
 		} catch ( \Exception $e ) {
-			if (! $activeTransaction) {
+			if ($endTransaction) {
 				$conn->rollback();
 			}
 			LogUtils::error($e);
 			throw $e;
 		}
 
-		if (! $activeTransaction) {
+		if ($endTransaction) {
 			$conn->commit();
 		}
 	}

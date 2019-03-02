@@ -44,8 +44,8 @@ abstract class GenericDao {
 	 *        	model à mettre à jour
 	 * @throws \Exception
 	 */
-	public function update(Entity $entity, bool $activeTransaction = false) {
-		$entity->update($this->conn, $activeTransaction);
+	public function update(Entity $entity) {
+		$entity->update();
 	}
 
 	/**
