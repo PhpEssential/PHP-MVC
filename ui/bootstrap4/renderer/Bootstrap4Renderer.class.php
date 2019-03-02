@@ -32,6 +32,12 @@ class Bootstrap4Renderer extends DefaultRenderer {
 	 */
 	private $label;
 
+	/**
+	 *
+	 * @var bool
+	 */
+	private $hasLabel = false;
+
 	public function __construct(string $label = null) {
 		$this->container = (new Container("div"));
 		$this->container->addClasses(array (
@@ -42,6 +48,7 @@ class Bootstrap4Renderer extends DefaultRenderer {
 		$this->labelContainer = new Container("div");
 		$this->label = new Label();
 		if ($label != null) {
+			$this->hasLabel = true;
 			$this->setLabelText($label . " : ");
 		}
 
@@ -68,19 +75,12 @@ class Bootstrap4Renderer extends DefaultRenderer {
 
 	/**
 	 *
-	 * @return Label
-	 */
-	public function getLabel(): Label {
-		return $this->label;
-	}
-
-	/**
-	 *
 	 * @param string $text
 	 * @return Bootstrap4Renderer
 	 */
 	public function setLabelText(string $text) {
 		$this->label->setText($text);
+		$this->hasLabel = true;
 		return $this;
 	}
 
@@ -130,6 +130,9 @@ class Bootstrap4Renderer extends DefaultRenderer {
 	public function render(HtmlElement $element) {
 		$this->container->setId("container_" . $element->getId());
 		$this->elementContainer->addChild($element);
-		$this->container->addChild($this->labelContainer)->addChild($this->elementContainer)->render();
+		if ($this->hasLabel) {
+			$this->container->addChild($this->labelContainer);
+		}
+		$this->container->addChild($this->elementContainer)->render();
 	}
 }
