@@ -73,7 +73,7 @@ abstract class HtmlElement {
 	 * @return HtmlElement
 	 */
 	public function putArgument(string $name, $value = null) {
-		$this->arguments [$name] = $value;
+		$this->arguments [$name] = strval($value);
 		return $this;
 	}
 
