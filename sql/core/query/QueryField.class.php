@@ -7,13 +7,13 @@ use framework\sql\core\metadata\Field;
  * Représentation d'un champ dans une requête SQL
  */
 class QueryField {
-	
+
 	/**
 	 *
 	 * @var AliasedTable
 	 */
 	public $table;
-	
+
 	/**
 	 *
 	 * @var Field
@@ -26,6 +26,6 @@ class QueryField {
 	}
 
 	public function getAccessString(): string {
-		return $this->table->getAlias() . "." . $this->field->sqlName;
+		return "`" . $this->table->getAlias() . "`.`" . $this->field->sqlName . "`";
 	}
 }

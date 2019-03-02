@@ -9,14 +9,14 @@ use framework\sql\core\metadata\Field;
  * Represent a SQL INSERT instructions which is used to insert entity's data into database
  */
 class Insert {
-	
+
 	/**
 	 * Entities fields
 	 *
 	 * @var array[Field, mixed]
 	 */
 	private $fieldValueMap = array ();
-	
+
 	/**
 	 * Entity table
 	 *
@@ -45,12 +45,12 @@ class Insert {
 		foreach ( $this->fieldValueMap as $fieldName => $fieldValueEntry ) {
 			$field = $fieldValueEntry [0];
 			$value = $fieldValueEntry [1];
-			$sqlFields .= $fieldName . ",";
+			$sqlFields .= "`" . $fieldName . "`,";
 			$sqlValues .= SqlUtils::addQuote($field, SqlUtils::ensureSqlValue($field, $value)) . ",";
 		}
 		$sqlFields = substr($sqlFields, 0, - 1);
 		$sqlValues = substr($sqlValues, 0, - 1);
-		
+
 		return "INSERT INTO `" .
 				$dbName .
 				"`.`" .
