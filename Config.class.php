@@ -2,16 +2,17 @@
 namespace framework;
 
 use framework\utils\LogUtils;
+use framework\utils\StringUtils;
 
 /**
- * Singleton permettant l'accès aux données de configuration
+ * Configuration access
  *
- * Le système va rechercher un fichier nommé config.ini devant être à la racine du projet
+ * The configuration file must be place in "conf" folder which must be at root of project
  */
 class Config {
 
 	/*
-	 * Clés disponible dans la configuration
+	 * Default configuration keys
 	 */
 	const DB_HOST = "db_host";
 	const DB_NAME = "db_name";
@@ -21,44 +22,93 @@ class Config {
 	const ROOT_PATH = "root_path";
 	const EMAIL_INFO = "email_info";
 	const DEFAULT_LOCAL = "default_local";
+	const DEFAULT_TIMEZONE = "default_timezone";
+	const ENV_TYPE = "env";
+	const LOG_ACTIVE = "log_active";
+	const LOG_FILE = "log_file";
 
 	/**
-	 * Instance du singleton
+	 * Singleton's instance
 	 *
 	 * @var Config
 	 */
-	private static $instance = null;
+	private static $instance;
 
 	/**
-	 * Tableau associatif contenant les données de configuration
+	 * Configuration values
 	 *
 	 * @var array
 	 */
-	private $params;
+	private $values;
 
 	/**
-	 * Construit la config depuis le fichier config.ini qui doit être à la racine du projet
+	 * Load ini file
 	 */
 	function __construct() {
-		$this->params = parse_ini_file(dirname(__FILE__) . DS . ".." . DS . "conf" . DS . "config.ini");
+		if (! file_exists(APPLICATION_CONFIGURATION_FILE)) {
+			LogUtils::error("configuration file not found, check your APPLICATION_CONFIGURATION_FILE path");
+		}
+		$this->values = parse_ini_file(APPLICATION_CONFIGURATION_FILE);
 	}
 
-	/**
-	 * Permet de récupérer une donnée de configuration
-	 *
-	 * @param string $key
-	 *        	clé permettant d'accéder à la donnée
-	 *
-	 * @return string donnée de configuration
-	 */
-	public static function get(string $key): string {
+	private static function getInstance(): Config {
 		if (self::$instance === null) {
 			self::$instance = new Config();
 		}
-		if (array_key_exists($key, self::$instance->params)) {
-			return self::$instance->params [$key];
+		return self::$instance;
+	}
+
+	public static function loadConfiguration() {
+		// Set log configuration
+		ini_set('log_errors', (self::has(self::LOG_ACTIVE) && self::get(self::LOG_ACTIVE) === "true" ? "On" : "Off"));
+		if (self::has(self::LOG_FILE)) {
+			$logFile = self::get(self::LOG_FILE);
+			if (! StringUtils::startsWith($logFile, DS)) {
+				$logFile = APPLICATION_ROOT . $logFile;
+			}
+			ini_set('error_log', $logFile);
+		}
+
+		// Set error configuration
+		if (! self::isProd()) {
+			ini_set('display_errors', 1);
+			error_reporting(E_ALL);
 		} else {
-			LogUtils::warning("key not found in config.ini file : " . $key);
+			ini_set('display_errors', 0);
+			error_reporting(0);
+		}
+	}
+
+	public static function isDev() {
+		return self::get(self::ENV_TYPE) == "dev";
+	}
+
+	public static function isTest() {
+		return self::get(self::ENV_TYPE) == "test";
+	}
+
+	public static function isProd() {
+		return self::get(self::ENV_TYPE) == "prod";
+	}
+
+	public static function has(string $key): string {
+		return array_key_exists($key, self::getInstance()->values);
+	}
+
+	/**
+	 * Get configuration value
+	 *
+	 * @param string $key
+	 *        	- configuration key
+	 *
+	 * @return string configuration value
+	 */
+	public static function get(string $key) {
+		if (self::has($key)) {
+			return self::getInstance()->values [$key];
+		} else {
+			LogUtils::warning("key not found in " . APPLICATION_CONFIGURATION_FILE . " file : " . $key);
+			return null;
 		}
 	}
 }
