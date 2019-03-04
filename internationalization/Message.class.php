@@ -39,7 +39,7 @@ class Message {
 	private $params = array ();
 
 	private function __construct(string $fileName, string $local) {
-		$filePath = APP_ROOT . "conf" . DS . $fileName . ".ini";
+		$filePath = APPLICATION_ROOT . "conf" . DIRECTORY_SEPARATOR . $fileName . ".ini";
 		if (file_exists($filePath)) {
 			$this->params = parse_ini_file($filePath);
 		} else {

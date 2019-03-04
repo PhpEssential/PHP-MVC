@@ -44,7 +44,7 @@ class FileUtils {
 	 * @throws \Exception
 	 */
 	public static function removeUploadedFile(string $fileName) {
-		$filePath = sprintf(APP_ROOT . "images" . DS . "uploads" . DS . "%s", $fileName);
+		$filePath = sprintf(APPLICATION_ROOT . "images" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "%s", $fileName);
 		if (! file_exists($filePath)) {
 			LogUtils::warning("File not found: " . $filePath);
 		} else {
@@ -70,7 +70,7 @@ class FileUtils {
 			$fileName = SecurityUtils::generateToken(64);
 			$postedFileName = $postedFile ['name'];
 			$ext = strtolower(pathinfo($postedFileName, PATHINFO_EXTENSION));
-			if (! move_uploaded_file($postedFile ['tmp_name'], sprintf(APP_ROOT . "images" . DS . "uploads" . DS . "%s.%s", $fileName, $ext))) {
+			if (! move_uploaded_file($postedFile ['tmp_name'], sprintf(APPLICATION_ROOT . "images" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "%s.%s", $fileName, $ext))) {
 				throw new \RuntimeException('Failed to move uploaded file.');
 			}
 			return $fileName . "." . $ext;
