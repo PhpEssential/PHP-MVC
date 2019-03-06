@@ -1,5 +1,5 @@
 <?php
-namespace framework\internationalization;
+namespace framework\i18n;
 
 use framework\Config;
 use framework\utils\LogUtils;

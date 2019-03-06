@@ -2,7 +2,7 @@
 namespace framework\ui\form;
 
 use framework\exception\IllegalArgumentException;
-use framework\internationalization\Message;
+use framework\i18n\Message;
 use framework\utils\FileUtils;
 use framework\utils\LogUtils;
 use framework\utils\StringUtils;
