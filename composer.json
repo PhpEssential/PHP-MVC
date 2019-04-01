@@ -1,5 +1,5 @@
 {
-    "name": "TheSideEffect/mvc-essenstials",
+    "name": "thesideeffect/mvc-essenstials",
     "autoload": {
         "psr-4": { "tse\\mvc\\": "src/" }
     },
@@ -7,8 +7,8 @@
     "keywords": ["mvc"], 
     "license": "DBAD", 
     "authors": [ { 
-        "name": "Vince", 
-        "email": "vincent-thibaut@live.fr" } 
+        "name": "TheSideEffect", 
+        "email": "admin@thesideeffect.fr" } 
     ],
     "type": "project",
     "require": {
