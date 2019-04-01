@@ -1,21 +1,24 @@
 {
-    "name": "thesideeffect/mvc-essenstials",
-    "autoload": {
-        "psr-4": { "tse\\mvc\\": "src/" }
-    },
-    "description": "Another mvc framework", 
-    "keywords": ["mvc"], 
-    "license": "DBAD", 
-    "authors": [ { 
-        "name": "TheSideEffect", 
-        "email": "admin@thesideeffect.fr" } 
-    ],
-    "type": "project",
-    "require": {
+	"name": "thesideeffect/mvc-essentials",
+	"autoload": {
+		"psr-4": {
+			"tse\\mvc\\": "src/"
+		}
+	},
+	"description": "Another mvc framework",
+	"keywords": [
+		"mvc"
+	],
+	"license": "DBAD",
+	"authors": [
+		{
+			"name": "TheSideEffect",
+			"email": "admin@thesideeffect.fr"
+		}
+	],
+	"type": "project",
+	"require": {
 		"php": ">=7.2"
-    },
-    "require-dev": {
-		"phpunit/phpunit": "8.*"
-    },
-    "version": "1.0.0"
+	},
+	"version": "1.0.0"
 }
