@@ -40,14 +40,12 @@ class Route {
 			LogUtils::error($e);
 			Route::internalServerError();
 		}
-		self::closeBdd();
 	}
 
 	/**
 	 * Return a responde code 500
 	 */
 	public static function internalServerError() {
-		self::closeBdd();
 		header("HTTP/1.1 500 Internal server error", true, 500);
 		exit();
 	}
@@ -56,7 +54,6 @@ class Route {
 	 * Return a response code 404
 	 */
 	public static function notFound() {
-		self::closeBdd();
 		header("HTTP/1.1 404 Not Found", true, 404);
 		exit();
 	}
@@ -65,7 +62,6 @@ class Route {
 	 * Retourne un code HTTP 401
 	 */
 	public static function unauthorized() {
-		self::closeBdd();
 		header("HTTP/1.1 401 Unauthorized", true, 401);
 		exit();
 	}
@@ -74,7 +70,6 @@ class Route {
 	 * Retourne un code HTTP 400
 	 */
 	public static function badRequest() {
-		self::closeBdd();
 		header("HTTP/1.1 400 Bad request", true, 400);
 		exit();
 	}
@@ -86,7 +81,6 @@ class Route {
 	 *        	route vers laquelle rediriger
 	 */
 	public static function redirection(string $route) {
-		self::closeBdd();
 		header("Location:" . $route);
 		exit();
 	}
@@ -98,7 +92,6 @@ class Route {
 	 *        	objet à transformer en json et à envoyer au client
 	 */
 	public static function sendJson($objectToSend) {
-		self::closeBdd();
 		echo json_encode($objectToSend);
 		exit();
 	}
