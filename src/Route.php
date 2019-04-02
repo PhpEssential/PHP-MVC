@@ -1,5 +1,5 @@
 <?php
-namespace framework;
+namespace tse\mvc;
 
 use tse\mvc\utils\LogUtils;
 
