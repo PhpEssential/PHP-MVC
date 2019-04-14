@@ -1,7 +1,7 @@
 <?php
-namespace tse\mvc\ui\bootstrap4;
+namespace phpessential\mvc\ui\bootstrap4;
 
-use tse\mvc\ui\TextInput as DefaultTextInput;
+use phpessential\mvc\ui\TextInput as DefaultTextInput;
 
 class TextInput extends DefaultTextInput {
 

@@ -1,7 +1,7 @@
 <?php
-namespace tse\mvc\ui\bootstrap4;
+namespace phpessential\mvc\ui\bootstrap4;
 
-use tse\mvc\ui\TextArea as DefaultTextArea;
+use phpessential\mvc\ui\TextArea as DefaultTextArea;
 
 class TextArea extends DefaultTextArea {
 

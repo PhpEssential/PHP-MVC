@@ -3,3 +3,5 @@
 /.settings
 /vendor
 /composer.lock
+/nbproject/private/
+/nbproject/

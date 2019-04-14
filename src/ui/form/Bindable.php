@@ -1,11 +1,11 @@
 <?php
-namespace tse\mvc\ui\form;
+namespace phpessential\mvc\ui\form;
 
-use tse\mvc\exception\IllegalArgumentException;
-use tse\mvc\i18n\Message;
-use tse\mvc\utils\FileUtils;
-use tse\mvc\utils\LogUtils;
-use tse\mvc\utils\StringUtils;
+use phpessential\mvc\exception\IllegalArgumentException;
+use phpessential\mvc\i18n\Message;
+use phpessential\mvc\utils\FileUtils;
+use phpessential\mvc\utils\LogUtils;
+use phpessential\mvc\utils\StringUtils;
 
 /**
  * You can bind an object with data of an http request if it inherit this class

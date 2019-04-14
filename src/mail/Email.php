@@ -1,7 +1,7 @@
 <?php
-namespace tse\mvc\mail;
+namespace phpessential\mvc\mail;
 
-use tse\mvc\utils\LogUtils;
+use phpessential\mvc\utils\LogUtils;
 
 class Email {
 	private $receiver;

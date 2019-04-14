@@ -1,8 +1,8 @@
 <?php
-namespace tse\mvc\ui\renderer;
+namespace phpessential\mvc\ui\renderer;
 
-use tse\mvc\ui\HtmlElement;
-use tse\mvc\ui\Container;
+use phpessential\mvc\ui\HtmlElement;
+use phpessential\mvc\ui\Container;
 
 /**
  * Basic renderer

@@ -1,5 +1,5 @@
 <?php
-namespace tse\mvc\system;
+namespace phpessential\mvc\system;
 
 class System {
 

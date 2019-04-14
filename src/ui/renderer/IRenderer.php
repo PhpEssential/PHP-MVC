@@ -1,7 +1,7 @@
 <?php
-namespace tse\mvc\ui\renderer;
+namespace phpessential\mvc\ui\renderer;
 
-use tse\mvc\ui\HtmlElement;
+use phpessential\mvc\ui\HtmlElement;
 
 /**
  * This interface allow you to realize custom draw of user controls

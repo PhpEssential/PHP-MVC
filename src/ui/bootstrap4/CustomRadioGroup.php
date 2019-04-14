@@ -1,8 +1,8 @@
 <?php
-namespace tse\mvc\ui\bootstrap4;
+namespace phpessential\mvc\ui\bootstrap4;
 
-use tse\mvc\ui\Control;
-use tse\mvc\ui\HtmlElement;
+use phpessential\mvc\ui\Control;
+use phpessential\mvc\ui\HtmlElement;
 
 class CustomRadioGroup extends Control {
 

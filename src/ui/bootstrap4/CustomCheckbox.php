@@ -1,9 +1,9 @@
 <?php
-namespace tse\mvc\ui\bootstrap4;
+namespace phpessential\mvc\ui\bootstrap4;
 
-use tse\mvc\ui\Container;
-use tse\mvc\ui\Checkbox;
-use tse\mvc\ui\Label;
+use phpessential\mvc\ui\Container;
+use phpessential\mvc\ui\Checkbox;
+use phpessential\mvc\ui\Label;
 
 class CustomCheckbox extends Container {
 

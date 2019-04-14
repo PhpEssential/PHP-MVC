@@ -1,7 +1,7 @@
 <?php
-namespace tse\mvc\ui\bootstrap4;
+namespace phpessential\mvc\ui\bootstrap4;
 
-use tse\mvc\ui\PasswordInput as DefaultPasswordInput;
+use phpessential\mvc\ui\PasswordInput as DefaultPasswordInput;
 
 class PasswordInput extends DefaultPasswordInput {
 

@@ -1,8 +1,8 @@
 {
-	"name": "thesideeffect/mvc-essentials",
+	"name": "phpessential/mvc",
 	"autoload": {
 		"psr-4": {
-			"tse\\mvc\\": "src/"
+			"phpessential\\mvc\\": "src/"
 		}
 	},
 	"description": "Another mvc framework",

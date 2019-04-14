@@ -1,5 +1,5 @@
 <?php
-namespace tse\mvc\utils;
+namespace phpessential\mvc\utils;
 
 /**
  * Classe utilitaire pour la gestion des cookies

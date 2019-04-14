@@ -1,8 +1,8 @@
 <?php
-namespace tse\mvc\ui;
+namespace phpessential\mvc\ui;
 
-use tse\mvc\ui\renderer\IRenderer;
-use tse\mvc\ui\renderer\DefaultRenderer;
+use phpessential\mvc\ui\renderer\IRenderer;
+use phpessential\mvc\ui\renderer\DefaultRenderer;
 
 abstract class HtmlElement {
 

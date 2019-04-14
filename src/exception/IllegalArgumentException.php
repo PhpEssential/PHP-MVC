@@ -1,5 +1,5 @@
 <?php
-namespace tse\mvc\exception;
+namespace phpessential\mvc\exception;
 
 class IllegalArgumentException extends \Exception {
 

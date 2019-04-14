@@ -1,7 +1,7 @@
 <?php
-namespace tse\mvc;
+namespace phpessential\mvc;
 
-use tse\mvc\utils\LogUtils;
+use phpessential\mvc\utils\LogUtils;
 
 /**
  * Url route management

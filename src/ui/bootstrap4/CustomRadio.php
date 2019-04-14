@@ -1,10 +1,10 @@
 <?php
-namespace tse\mvc\ui\bootstrap4;
+namespace phpessential\mvc\ui\bootstrap4;
 
-use tse\mvc\ui\Container;
-use tse\mvc\ui\Radio;
-use tse\mvc\ui\Label;
-use tse\mvc\ui\HtmlElement;
+use phpessential\mvc\ui\Container;
+use phpessential\mvc\ui\Radio;
+use phpessential\mvc\ui\Label;
+use phpessential\mvc\ui\HtmlElement;
 
 class CustomRadio extends Container {
 

@@ -1,5 +1,5 @@
 <?php
-namespace tse\mvc\ui;
+namespace phpessential\mvc\ui;
 
 abstract class Control extends HtmlElement {
 

@@ -1,8 +1,8 @@
 <?php
-namespace tse\mvc;
+namespace phpessential\mvc;
 
-use tse\mvc\utils\LogUtils;
-use tse\mvc\utils\StringUtils;
+use phpessential\mvc\utils\LogUtils;
+use phpessential\mvc\utils\StringUtils;
 
 /**
  * Configuration access

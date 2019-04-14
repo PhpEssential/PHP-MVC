@@ -1,8 +1,8 @@
 <?php
-namespace tse\mvc\i18n;
+namespace phpessential\mvc\i18n;
 
-use tse\mvc\Config;
-use tse\mvc\utils\LogUtils;
+use phpessential\mvc\Config;
+use phpessential\mvc\utils\LogUtils;
 
 class Message {
 

@@ -1,10 +1,10 @@
 <?php
-namespace tse\mvc\ui\bootstrap4\renderer;
+namespace phpessential\mvc\ui\bootstrap4\renderer;
 
-use tse\mvc\ui\Container;
-use tse\mvc\ui\HtmlElement;
-use tse\mvc\ui\Label;
-use tse\mvc\ui\renderer\DefaultRenderer;
+use phpessential\mvc\ui\Container;
+use phpessential\mvc\ui\HtmlElement;
+use phpessential\mvc\ui\Label;
+use phpessential\mvc\ui\renderer\DefaultRenderer;
 
 class Bootstrap4Renderer extends DefaultRenderer {
 

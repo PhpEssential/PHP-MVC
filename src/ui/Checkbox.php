@@ -1,5 +1,5 @@
 <?php
-namespace tse\mvc\ui;
+namespace phpessential\mvc\ui;
 
 class Checkbox extends Input {
 
