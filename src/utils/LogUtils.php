@@ -7,7 +7,8 @@ use \Exception;
 class LogUtils {
 
     public static function error($e) {
-        if($e instanceof Exception) {
+        $str = null;
+        if ($e instanceof Exception) {
             $str = self::logError($e, "\n");
         } else {
             $str .= "[ERROR] " . $e . "\n";
