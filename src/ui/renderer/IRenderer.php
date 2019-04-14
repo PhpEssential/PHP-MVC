@@ -1,4 +1,5 @@
 <?php
+
 namespace phpessential\mvc\ui\renderer;
 
 use phpessential\mvc\ui\HtmlElement;
@@ -8,9 +9,9 @@ use phpessential\mvc\ui\HtmlElement;
  */
 interface IRenderer {
 
-	/**
-	 *
-	 * @param HtmlElement $element
-	 */
-	public function render(HtmlElement $element);
+    /**
+     *
+     * @param HtmlElement $element
+     */
+    public function render(HtmlElement $element);
 }
