@@ -4,6 +4,7 @@ namespace phpessential\mvc;
 
 use phpessential\mvc\utils\LogUtils;
 use phpessential\mvc\utils\StringUtils;
+use \Exception;
 
 /**
  * Configuration access
