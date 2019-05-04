@@ -45,16 +45,16 @@ class Config {
     /**
      * Load ini file
      */
-    function __construct() {
+    protected function __construct() {
         if (!file_exists(APPLICATION_CONFIGURATION_FILE)) {
             throw new Exception("configuration file not found, check your APPLICATION_CONFIGURATION_FILE path");
         }
         $this->values = parse_ini_file(APPLICATION_CONFIGURATION_FILE);
     }
 
-    private static function getInstance(): Config {
+    private static function getInstance($class = Config::class): Config {
         if (self::$instance === null) {
-            self::$instance = new Config();
+            self::$instance = new $class();
         }
         return self::$instance;
     }
