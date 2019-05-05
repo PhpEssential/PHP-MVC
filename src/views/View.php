@@ -39,7 +39,7 @@ abstract class View {
     private function writeClientRoutes() {
         $jsRoutes = 'var jsRoutes={};';
         foreach ($this->clientRoutes as $key => $route) {
-            $jsRoutes .= "jsMessages.$key=$route;";
+            $jsRoutes .= "jsMessages.$key=\"$route\";";
         }
         echo $jsRoutes;
     }
@@ -47,7 +47,7 @@ abstract class View {
     private function writeClientMessages() {
         $jsMessages = 'var jsMessages={};';
         foreach ($this->clientMessages as $key => $message) {
-            $jsMessages .= "jsMessages.$key=$message;";
+            $jsMessages .= "jsMessages.$key=\"$message\";";
         }
         echo $jsMessages;
     }
