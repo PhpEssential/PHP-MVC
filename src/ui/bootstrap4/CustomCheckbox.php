@@ -44,4 +44,25 @@ class CustomCheckbox extends Container {
         return $this;
     }
 
+    /**
+     *
+     * @param string $class
+     * @return HtmlElement
+     */
+    public function addLabelClass(string $class) {
+        $this->label->addClass($class);
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $name
+     * @param string $value
+     * @return HtmlElement
+     */
+    public function addLabelStyle(string $name, string $value) {
+        $this->label->addStyle($name, $value);
+        return $this;
+    }
+
 }
