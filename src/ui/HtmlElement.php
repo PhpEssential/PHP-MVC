@@ -254,7 +254,7 @@ abstract class HtmlElement {
     private function prepareStyle(): string {
         $strStyle = "";
         foreach ($this->style as $name => $value) {
-            $strStyle .= $name . ":" . $value . " ";
+            $strStyle .= $name . ":" . $value . ";";
         }
         return substr($strStyle, 0, - 1);
     }
