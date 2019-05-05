@@ -39,7 +39,7 @@ abstract class View {
     private function writeClientRoutes() {
         $jsRoutes = 'var jsRoutes={};';
         foreach ($this->clientRoutes as $key => $route) {
-            $jsRoutes .= "jsMessages.$key=\"$route\";";
+            $jsRoutes .= "jsRoutes.$key=\"$route\";";
         }
         echo $jsRoutes;
     }
