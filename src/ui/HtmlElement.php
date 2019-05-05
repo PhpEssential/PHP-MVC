@@ -170,7 +170,7 @@ abstract class HtmlElement {
      * @return HtmlElement
      */
     public function addStyles(array $styles) {
-        $this->style + $styles;
+        $this->style = $this->style + $styles;
         return $this;
     }
 
@@ -181,9 +181,7 @@ abstract class HtmlElement {
      * @return HtmlElement
      */
     public function addStyle(string $name, string $value) {
-        $this->style + array(
-            $name => $value
-        );
+        $this->style = $this->style + array($name => $value);
         return $this;
     }
 
