@@ -18,7 +18,7 @@ abstract class View {
 
     }
 
-    protected abstract function getTitle();
+    protected abstract function getHtmlTitle();
 
     public function putClientMessage(string $key, string $message) {
         $this->clientMessages[$key] = $message;
@@ -60,7 +60,7 @@ abstract class View {
                 $this->writeHtmlMeta();
                 $this->writeHtmlLinks();
                 ?>
-                <title><?php echo $this->getTitle(); ?></title>
+                <title><?php echo $this->getHtmlTitle(); ?></title>
             </head>
             <?php
         }
@@ -84,11 +84,12 @@ abstract class View {
         <?php
     }
 
-    protected abstract function writeHtmlBody();
+    protected abstract function writeHtmlBody($args);
 
     public function render() {
+        $args = func_get_args();
         $this->writeHtmlHeader();
-        $this->writeHtmlBody();
+        $this->writeHtmlBody($args);
         $this->writeHtmlFooter();
     }
 
