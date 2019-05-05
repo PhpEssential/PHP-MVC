@@ -67,10 +67,6 @@ abstract class View {
 
         private function writeHtmlFooter() {
             ?>
-
-            <script src="<?php echo Route::createUrlFromRoot("vendor/fortawesome/font-awesome/js/all.min.js"); ?>" type="text/javascript"></script>
-            <script src="<?php echo Route::createUrlFromRoot("vendor/components/jquery/jquery.min.js"); ?>" type="text/javascript"></script>
-            <script src="<?php echo Route::createUrlFromRoot("vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"); ?>" type="text/javascript"></script>
             <script type="text/javascript">
         <?php
         $this->writeClientRoutes();
