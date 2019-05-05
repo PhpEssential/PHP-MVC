@@ -1,6 +1,6 @@
 <?php
 
-namespace src\views;
+namespace phpessential\mvc\views;
 
 abstract class View {
     private $clientMessages = array();
