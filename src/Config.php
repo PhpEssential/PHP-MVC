@@ -22,6 +22,8 @@ class Config {
     const ROOT_URL = "root_url";
     const ROOT_PATH = "root_path";
     const EMAIL_INFO = "email_info";
+    const SMTP = "smtp";
+    const SMTP_PORT = "smtp_port";
     const DEFAULT_LOCAL = "default_local";
     const DEFAULT_TIMEZONE = "default_timezone";
     const ENV_TYPE = "env";
@@ -77,6 +79,12 @@ class Config {
         } else {
             ini_set('display_errors', 0);
             error_reporting(0);
+        }
+
+        // Set smtp configuration
+        if (self::has(self::SMTP)) {
+            ini_set('SMTP', self::get(self::SMTP));
+            ini_set('smtp_port', self::get(self::SMTP_PORT));
         }
     }
 
