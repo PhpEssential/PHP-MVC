@@ -14,7 +14,11 @@ class Checkbox extends Input {
      * @return Checkbox
      */
     public function setChecked(bool $checked) {
-        $this->putArgument("checked");
+        if ($checked) {
+            $this->putArgument("checked");
+        } else {
+            $this->removeArgument("checked");
+        }
         return $this;
     }
 

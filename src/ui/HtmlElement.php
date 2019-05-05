@@ -69,11 +69,24 @@ abstract class HtmlElement {
 
     /**
      *
-     * @param array $args
+     * @param string $name
+     * @param mixed $value
      * @return HtmlElement
      */
     public function putArgument(string $name, $value = null) {
         $this->arguments [$name] = strval($value);
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $name
+     * @return HtmlElement
+     */
+    public function removeArgument(string $name) {
+        if (array_key_exists($name, $this->arguments)) {
+            unset($this->arguments [$name]);
+        }
         return $this;
     }
 

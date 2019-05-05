@@ -21,7 +21,7 @@ class Config {
     const DB_PASSWORD = "db_password";
     const ROOT_URL = "root_url";
     const ROOT_PATH = "root_path";
-    const EMAIL_INFO = "email_info";
+    const EMAIL_DEFAULT_SENDER = "email_default_sender";
     const SMTP = "smtp";
     const SMTP_PORT = "smtp_port";
     const DEFAULT_LOCAL = "default_local";

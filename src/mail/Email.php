@@ -3,6 +3,7 @@
 namespace phpessential\mvc\mail;
 
 use phpessential\mvc\utils\LogUtils;
+use phpessential\mvc\Config;
 
 class Email {
     private $receiver;
@@ -12,11 +13,17 @@ class Email {
     private $charset = "UTF-8";
     private $contentType = "text/plain";
 
-    public function __construct(string $receiver, string $sender, string $subject, string $message) {
+    public function __construct(string $receiver, string $subject, string $message) {
         $this->receiver = $receiver;
-        $this->sender = $sender;
         $this->subject = $subject;
         $this->message = $message;
+        if (Config::has(Config::EMAIL_DEFAULT_SENDER)) {
+            $this->sender = Config::get(Config::EMAIL_DEFAULT_SENDER);
+        }
+    }
+
+    public function setSender(string $sender) {
+        $this->sender = $sender;
     }
 
     /**
