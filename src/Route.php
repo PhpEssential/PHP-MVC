@@ -45,6 +45,60 @@ class Route {
     }
 
     /**
+     * Return a responde code 500
+     */
+    public static function internalServerError() {
+        header("HTTP/1.1 500 Internal server error", true, 500);
+        exit();
+    }
+
+    /**
+     * Return a response code 404
+     */
+    public static function notFound() {
+        header("HTTP/1.1 404 Not Found", true, 404);
+        exit();
+    }
+
+    /**
+     * Retourne un code HTTP 401
+     */
+    public static function unauthorized() {
+        header("HTTP/1.1 401 Unauthorized", true, 401);
+        exit();
+    }
+
+    /**
+     * Retourne un code HTTP 400
+     */
+    public static function badRequest() {
+        header("HTTP/1.1 400 Bad request", true, 400);
+        exit();
+    }
+
+    /**
+     * Redirection vers une route
+     *
+     * @param string $route
+     *        	route vers laquelle rediriger
+     */
+    public static function redirection(string $route) {
+        header("Location:" . $route);
+        exit();
+    }
+
+    /**
+     * Redirection vers une route
+     *
+     * @param mixed $objectToSend
+     *        	objet à transformer en json et à envoyer au client
+     */
+    public static function sendJson($objectToSend) {
+        echo json_encode($objectToSend);
+        exit();
+    }
+
+    /**
      * Crée une url depuis une route
      *
      * @param string $route
