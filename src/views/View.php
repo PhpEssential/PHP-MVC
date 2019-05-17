@@ -80,11 +80,11 @@ abstract class View {
         <?php
     }
 
-    protected abstract function writeHtmlBody($args);
+    protected abstract function writeHtmlBody($context);
 
     public function render($context = null) {
         $this->writeHtmlHeader();
-        $this->writeHtmlBody($args);
+        $this->writeHtmlBody($context);
         $this->writeHtmlFooter();
     }
 
