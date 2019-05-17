@@ -82,8 +82,7 @@ abstract class View {
 
     protected abstract function writeHtmlBody($args);
 
-    public function render() {
-        $args = func_get_args();
+    public function render($context = null) {
         $this->writeHtmlHeader();
         $this->writeHtmlBody($args);
         $this->writeHtmlFooter();
