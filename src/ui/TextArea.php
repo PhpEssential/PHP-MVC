@@ -33,15 +33,6 @@ class TextArea extends Control {
 
     /**
      *
-     * @param int $rows
-     * @return TextArea
-     */
-    public function setRows(int $rows) {
-        return $this->putArgument("rows", strval($rows));
-    }
-
-    /**
-     *
      * @param string $value
      * @return TextArea
      */

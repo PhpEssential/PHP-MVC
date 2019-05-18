@@ -86,6 +86,11 @@ class Config {
             ini_set('SMTP', self::get(self::SMTP));
             ini_set('smtp_port', self::get(self::SMTP_PORT));
         }
+
+        // Setup local and timezone from header
+        foreach (getallheaders() as $name => $value) {
+            echo "$name: $value <br>";
+        }
     }
 
     public static function isDev() {
