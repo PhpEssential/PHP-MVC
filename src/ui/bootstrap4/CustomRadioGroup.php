@@ -34,7 +34,7 @@ class CustomRadioGroup extends Control {
 
     public function setDisabled(bool $disable): Control {
         foreach ($this->radios as $value => $radio) {
-            $radio->setDisable($disable);
+            $radio->setDisabled($disable);
         }
         return $this;
     }
