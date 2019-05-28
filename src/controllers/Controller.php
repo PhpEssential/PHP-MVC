@@ -56,8 +56,8 @@ class Controller {
      * @param mixed $objectToSend
      *        	objet à transformer en json et à envoyer au client
      */
-    protected function sendJson($objectToSend) {
-        echo json_encode($objectToSend);
+    protected function sendJson($objectToSend, bool $stripNulls = false) {
+        echo json_encode($stripNulls ? array_filter((array) $objectToSend) : $objectToSend);
         exit();
     }
 
