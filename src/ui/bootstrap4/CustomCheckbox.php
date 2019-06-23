@@ -46,10 +46,12 @@ class CustomCheckbox extends Container {
 
     public function addInputClass(string $class) {
         $this->checkbox->addClass($class);
+        return $this;
     }
 
     public function putInputArgument(string $name, string $value = null) {
         $this->checkbox->putArgument($name, $value);
+        return $this;
     }
 
     /**
