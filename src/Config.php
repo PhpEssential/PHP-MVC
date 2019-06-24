@@ -92,7 +92,7 @@ class Config {
             setlocale(LC_ALL, self::get(self::DEFAULT_LOCAL));
         }
         if (self::has(self::DEFAULT_TIMEZONE)) {
-            if (!date_default_timezone_set(LC_ALL, self::get(self::DEFAULT_TIMEZONE))) {
+            if (!date_default_timezone_set(self::get(self::DEFAULT_TIMEZONE))) {
                 LogUtils::warning("Invalid timezone in configuration file: " . self::get(self::DEFAULT_TIMEZONE));
             }
         }
