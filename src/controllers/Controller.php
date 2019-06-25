@@ -57,8 +57,13 @@ class Controller {
      *        	objet à transformer en json et à envoyer au client
      */
     protected function sendJson($objectToSend, bool $stripNulls = false) {
-        echo json_encode($stripNulls ? array_filter((array) $objectToSend) : $objectToSend);
-        exit();
+        $json = json_encode($stripNulls ? array_filter((array) $objectToSend) : $objectToSend);
+        if ($json == false) {
+            throw new \Exception(json_last_error_msg());
+        } else {
+            echo $json;
+            exit();
+        }
     }
 
 }
