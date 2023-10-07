@@ -30,7 +30,7 @@ class SecurityUtils {
      * @return string
      */
     public static function hash($text, $salt) {
-        return crypt($text, md5($salt));
+        return substr(crypt($text, "$2y$10$" . md5($salt)), 7);
     }
 
 }
