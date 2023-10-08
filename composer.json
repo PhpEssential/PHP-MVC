@@ -1,0 +1,24 @@
+{
+    "name": "phpessential/mvc",
+    "autoload": {
+        "psr-4": {
+            "phpessential\\mvc\\": "src/"
+        }
+    },
+    "description": "Another mvc framework",
+    "keywords": [
+        "mvc"
+    ],
+    "license": "DBAD",
+    "authors": [
+        {
+            "name": "TheSideEffect",
+            "email": "admin@thesideeffect.fr"
+        }
+    ],
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "version": "1.0.0"
+}
